@@ -2,6 +2,12 @@ if !has('conceal')
   finish
 endif
 
+if !exists("g:tex_conceal")
+  let s:tex_conceal= 'abdmgsS'
+else
+  let s:tex_conceal= g:tex_conceal
+endif
+
 " " For producing the unicode characters,
 " " bold
 " for i in range(0,51)
@@ -548,8 +554,14 @@ syn match texMathSymbol '\%(\\textnormal{\s*y\s*}\|\\tnyy\>\)' contained conceal
 syn match texMathSymbol '\%(\\textnormal{\s*z\s*}\|\\tnzz\>\)' contained conceal cchar=z
 
 " Greek letters
-syn match texMathSymbol '\\eps\>' contained conceal cchar=ϵ
-syn match texMathSymbol '\\veps\>' contained conceal cchar=ε
+if s:tex_conceal =~# 'g'
+  " alias
+  syn match texGreek '\\eps\>' contained conceal cchar=ϵ
+  syn match texGreek '\\veps\>' contained conceal cchar=ε
+  " switch `phi` and `varphi`
+  syn match texGreek '\\phi\>' contained conceal cchar=φ
+  syn match texGreek '\\varphi\>' contained conceal cchar=ϕ
+endif
 
 " Other symbols
 syn match texSpecialChar '\\#' contained conceal cchar=#
@@ -601,12 +613,12 @@ if g:tex_conceal_frac == 1
 end
 
 " hide \text delimiter etc inside math mode
-if !exists("g:tex_nospell") || !g:tex_nospell
-  syn region texMathText matchgroup=texStatement start='\\\%(\%(inter\)\=mathrm\)\s*{'     end='}' concealends keepend contains=@texFoldGroup containedin=texMathMatcher
-  syn region texMathText matchgroup=texStatement start='\\\%(\%(inter\)\=text\|mbox\)\s*{' end='}' concealends keepend contains=@texFoldGroup,@Spell containedin=texMathMatcher
-else
-  syn region texMathText matchgroup=texStatement start='\\\%(\%(inter\)\=text\|mbox\|mathrm\)\s*{' end='}' concealends keepend contains=@texFoldGroup containedin=texMathMatcher
-endif
+"if !exists("g:tex_nospell") || !g:tex_nospell
+"  syn region texMathText matchgroup=texStatement start='\\\%(\%(inter\)\=mathrm\)\s*{'     skip="\\\\\|\\[{}]" end='}' concealends keepend contains=@texFoldGroup containedin=texMathMatcher
+"  syn region texMathText matchgroup=texStatement start='\\\%(\%(inter\)\=text\|mbox\)\s*{' skip="\\\\\|\\[{}]" end='}' concealends keepend contains=@texFoldGroup,@Spell containedin=texMathMatcher
+"else
+"  syn region texMathText matchgroup=texStatement start='\\\%(\%(inter\)\=text\|mbox\|mathrm\)\s*{' skip="\\\\\|\\[{}]" end='}' concealends keepend contains=@texFoldGroup containedin=texMathMatcher
+"endif
 
 syn region texBoldMathText  matchgroup=texStatement start='\\\%(mathbf\|bm\|symbf\|pmb\){' end='}' concealends contains=@texMathZoneGroup containedin=texMathMatcher
 syn cluster texMathZoneGroup add=texBoldMathText
@@ -622,202 +634,211 @@ match texUnderStyle /\\\%(underline\|uline\){\zs\(.\([^\\]}\)\@<!\)\+\ze}/
 " set ambiwidth=single
 
 " Simple number super/sub-scripts
-
-if !exists("g:tex_superscripts")
-  let s:tex_superscripts= '[0-9a-zA-W.,:;+-<>/()=]' " same as standard 'tex.vim'; acturally there is no 'q' available
-else
-  let s:tex_superscripts= g:tex_superscripts
-endif
-if !exists("g:tex_subscripts")
-  let s:tex_subscripts= '[0-9aehijklmnoprstuvx,+-/().=]' " follows standard 'tex.vim' except '='. Or, `let s:tex_subscripts='[0-9aeijoruvx,+-/().]'` if others cannot be displayed properly
-else
-  let s:tex_subscripts= g:tex_subscripts
-endif
-
-if !exists("g:tex_superscriptSymbols")
-  let s:tex_superscriptSymbols= ['\%(|\|\\vert\|\\mid\)','\\Vert','\\ne[q]\?',
-    \ '\\alpha','\\beta','\\gamma','\\Gamma','\\delta','\\Delta','\\eps\%(ilon\)\?','\\Lambda','\\theta','\\rho','\\sigma','\\iota','\\Phi','\\varphi','\\chi','\\omega']
-else
-  let s:tex_superscriptSymbols= g:tex_superscriptSymbols
-endif
-if !exists("g:tex_subscriptSymbols")
-  let s:tex_subscriptSymbols= ['\\beta','\\rho','\\varphi','\\gamma','\\chi']
-else
-  let s:tex_subscriptSymbols= g:tex_subscriptSymbols
-endif
-
-let s:superscript_pattern= '\^{\%(' . s:tex_superscripts . '\|\s'
-for temp_symbol in s:tex_superscriptSymbols
-  let s:superscript_pattern .= '\|'.temp_symbol
-endfor
-let s:superscript_pattern .= '\)\+}'
-let s:subscript_pattern= '_{\%(' . s:tex_subscripts . '\|\s'
-for temp_symbol in s:tex_subscriptSymbols
-  let s:subscript_pattern .= '\|'.temp_symbol
-endfor
-let s:subscript_pattern .= '\)\+}'
-
-syn clear texSuperscript texSubscript
-"syn region texSuperscript matchgroup=texDelimiter start='\^{\%([0-9a-zA-W.,:;+-<>/()=]\| \|\\alpha\|\\beta\)\+}'ms=s,me=s+1 end='}' concealends keepend contained contains=texSuperscripts
-exe "syn match texSuperscript '" . s:superscript_pattern . "' keepend contained contains=texSuperscripts"
-syn match texSuperscripts '\%(\^{\|\s\|}\)' contained conceal
-exe "syn match texSubscript '" . s:subscript_pattern . "' keepend contained contains=texSubscripts"
-syn match texSubscripts '\%(_{\|\s\|}\)' contained conceal
-
-" s:SuperSub:
-" Seems the below (and <https://github.com/vim/vim/blob/master/runtime/syntax/tex.vim>) are all that available
-" (see <https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts>, <https://stackoverflow.com/questions/17908593/how-to-find-the-unicode-of-the-subscript-alphabet>).
-" The unicode code values are also not continuous.
-fun! s:SuperSub(leader, pat, cchar)
-  let l:group = (a:leader == '\^')? "texSuperscript": "texSubscript"
-  if a:pat =~# '^\\' || (a:leader == '\^' && a:pat =~# s:tex_superscripts) || (a:leader == '_' && a:pat =~# s:tex_subscripts)
-    "exe "syn match texMathSymbol '".a:leader."\%(".a:pat."\|{\s*".a:pat."\s*}\)"."' contained conceal cchar=".a:cchar
-    exe "syn match ".l:group." '".a:leader.a:pat."' contained conceal cchar=".a:cchar
-    exe "syn match ".l:group."s '".a:pat."' contained conceal cchar=".a:cchar." nextgroup=".l:group."s"
+if s:tex_conceal =~# 's'
+  if !exists("g:tex_superscripts")
+    let s:tex_superscripts= '[0-9a-pr-zABDEG-PRT-W,:;+-<>/().=]' " The standard 'tex.vim': '[0-9a-zA-W.,:;+-<>/()=]', which overcovers
+  else
+    let s:tex_superscripts= g:tex_superscripts
   endif
-endfun
-
-call s:SuperSub('\^','0','⁰')
-call s:SuperSub('\^','1','¹')
-call s:SuperSub('\^','2','²')
-call s:SuperSub('\^','3','³')
-call s:SuperSub('\^','4','⁴')
-call s:SuperSub('\^','5','⁵')
-call s:SuperSub('\^','6','⁶')
-call s:SuperSub('\^','7','⁷')
-call s:SuperSub('\^','8','⁸')
-call s:SuperSub('\^','9','⁹')
-call s:SuperSub('\^','a','ᵃ')
-call s:SuperSub('\^','b','ᵇ')
-call s:SuperSub('\^','c','ᶜ')
-call s:SuperSub('\^','d','ᵈ')
-call s:SuperSub('\^','e','ᵉ')
-call s:SuperSub('\^','f','ᶠ')
-call s:SuperSub('\^','g','ᵍ')
-call s:SuperSub('\^','h','ʰ')
-call s:SuperSub('\^','i','ⁱ')
-call s:SuperSub('\^','j','ʲ')
-call s:SuperSub('\^','k','ᵏ')
-call s:SuperSub('\^','l','ˡ')
-call s:SuperSub('\^','m','ᵐ')
-call s:SuperSub('\^','n','ⁿ')
-call s:SuperSub('\^','o','ᵒ')
-call s:SuperSub('\^','p','ᵖ')
-call s:SuperSub('\^','r','ʳ')
-call s:SuperSub('\^','s','ˢ')
-call s:SuperSub('\^','t','ᵗ')
-call s:SuperSub('\^','u','ᵘ')
-call s:SuperSub('\^','v','ᵛ')
-call s:SuperSub('\^','w','ʷ')
-call s:SuperSub('\^','x','ˣ')
-call s:SuperSub('\^','y','ʸ')
-call s:SuperSub('\^','z','ᶻ')
-call s:SuperSub('\^','A','ᴬ')
-call s:SuperSub('\^','B','ᴮ')
-call s:SuperSub('\^','D','ᴰ')
-call s:SuperSub('\^','E','ᴱ')
-call s:SuperSub('\^','G','ᴳ')
-call s:SuperSub('\^','H','ᴴ')
-call s:SuperSub('\^','I','ᴵ')
-call s:SuperSub('\^','J','ᴶ')
-call s:SuperSub('\^','K','ᴷ')
-call s:SuperSub('\^','L','ᴸ')
-call s:SuperSub('\^','M','ᴹ')
-call s:SuperSub('\^','N','ᴺ')
-call s:SuperSub('\^','O','ᴼ')
-call s:SuperSub('\^','P','ᴾ')
-call s:SuperSub('\^','R','ᴿ')
-call s:SuperSub('\^','T','ᵀ')
-call s:SuperSub('\^','U','ᵁ')
-call s:SuperSub('\^','V','ⱽ')
-call s:SuperSub('\^','W','ᵂ')
-call s:SuperSub('\^',',','︐')
-call s:SuperSub('\^',':','︓')
-call s:SuperSub('\^',';','︔')
-call s:SuperSub('\^','+','⁺')
-call s:SuperSub('\^','-','⁻')
-call s:SuperSub('\^','<','ᑉ') " originally '˂'
-call s:SuperSub('\^','>','˃')
-call s:SuperSub('\^','/','ᐟ') " originally 'ˊ'
-call s:SuperSub('\^','(','⁽')
-call s:SuperSub('\^',')','⁾')
-call s:SuperSub('\^','\.','˙')
-call s:SuperSub('\^','=','˭')
-call s:SuperSub('\^','\%(|\|\\vert\|\\mid\)','ᑊ')
-call s:SuperSub('\^','\\Vert','ᐦ')
-call s:SuperSub('\^','\\ne[q]\?','ᙾ')
-call s:SuperSub('\^','\\alpha','ᵅ')
-call s:SuperSub('\^','\\beta','ᵝ')
-call s:SuperSub('\^','\\gamma','ᵞ')
-call s:SuperSub('\^','\\Gamma','ᣘ')
-call s:SuperSub('\^','\\delta','ᵟ')
-call s:SuperSub('\^','\\Delta','ᐞ')
-call s:SuperSub('\^','\\eps\%(ilon\)\?','ᵋ')
-call s:SuperSub('\^','\\Lambda','ᶺ')
-call s:SuperSub('\^','\\theta','ᶿ')
-call s:SuperSub('\^','\\rho','ᣖ')
-call s:SuperSub('\^','\\sigma','ᣙ')
-call s:SuperSub('\^','\\iota','ᶥ')
-call s:SuperSub('\^','\\Phi','ᶲ')
-call s:SuperSub('\^','\\varphi','ᵠ')
-call s:SuperSub('\^','\\chi','ᵡ')
-call s:SuperSub('\^','\\omega','ᐜ')
-
-syn match texMathSymbol '\^\%(\*\|\\ast\|\\star\|{\s*\\\%(ast\|star\)\s*}\)' contained conceal cchar=˟
-syn match texMathSymbol '\^{\s*-1\s*}' contained conceal contains=texSuperscripts
-syn match texMathSymbol '\^\%(\\math\%(rm\|sf\){\s*T\s*}\|{\s*\\math\%(rm\|sf\){\s*T\s*}\s*}\)' contained conceal contains=texSuperscripts
-syn match texMathSymbol '\^\%(\\math\%(rm\|sf\){\s*-T\s*}\|{\s*\\math\%(rm\|sf\){\s*-T\s*}\s*}\|{\s*-\s*\\math\%(rm\|sf\){\s*T\s*}\s*}\)' contained conceal contains=texSuperscripts
-syn match texSuperscripts '1' contained conceal cchar=¹
-syn match texSuperscripts '-' contained conceal cchar=⁻
-syn match texSuperscripts 'T' contained conceal cchar=ᵀ
-
-call s:SuperSub('\^', '\\top', 'ᵀ')
-syn match texMathSymbol '\\trs\>' contained conceal cchar=ᵀ
-
-call s:SuperSub('_','0','₀')
-call s:SuperSub('_','1','₁')
-call s:SuperSub('_','2','₂')
-call s:SuperSub('_','3','₃')
-call s:SuperSub('_','4','₄')
-call s:SuperSub('_','5','₅')
-call s:SuperSub('_','6','₆')
-call s:SuperSub('_','7','₇')
-call s:SuperSub('_','8','₈')
-call s:SuperSub('_','9','₉')
-call s:SuperSub('_','a','ₐ')
-call s:SuperSub('_','e','ₑ')
-call s:SuperSub('_','h','ₕ')
-call s:SuperSub('_','i','ᵢ')
-call s:SuperSub('_','j','ⱼ')
-call s:SuperSub('_','k','ₖ')
-call s:SuperSub('_','l','ₗ')
-call s:SuperSub('_','m','ₘ')
-call s:SuperSub('_','n','ₙ')
-call s:SuperSub('_','o','ₒ')
-call s:SuperSub('_','p','ₚ')
-call s:SuperSub('_','r','ᵣ')
-call s:SuperSub('_','s','ₛ')
-call s:SuperSub('_','t','ₜ')
-call s:SuperSub('_','u','ᵤ')
-call s:SuperSub('_','v','ᵥ')
-call s:SuperSub('_','x','ₓ')
-call s:SuperSub('_',',','︐')
-call s:SuperSub('_','+','₊')
-call s:SuperSub('_','-','₋')
-call s:SuperSub('_','/','ˏ')
-call s:SuperSub('_','(','₍')
-call s:SuperSub('_',')','₎')
-call s:SuperSub('_','\.','‸')
-call s:SuperSub('_','=','₌') " needs including '=' in `g:tex_subscripts` in '.vimrc'
-call s:SuperSub('_','\\beta','ᵦ')
-call s:SuperSub('_','\\rho','ᵨ')
-call s:SuperSub('_','\\varphi','ᵩ')
-call s:SuperSub('_','\\gamma','ᵧ')
-call s:SuperSub('_','\\chi','ᵪ')
-
-delfun s:SuperSub
+  if !exists("g:tex_subscripts")
+    let s:tex_subscripts= '[0-9aehijklmnoprstuvx,+-/().=]' " follows standard 'tex.vim' except '='. Or, `let s:tex_subscripts='[0-9aeijoruvx,+-/().]'` if others cannot be displayed properly
+  else
+    let s:tex_subscripts= g:tex_subscripts
+  endif
+  
+  if !exists("g:tex_superscriptSymbols")
+    let s:tex_superscriptSymbols= ['\\alpha','\\beta','\\gamma','\\Gamma','\\delta','\\Delta','\\\%(veps\|varepsilon\)',
+	  "\ '\\eps\%(ilon\)\?',
+	  \ '\\Lambda','\\theta','\\rho','\\sigma','\\iota','\\Phi','\\psi',
+	  "\ '\\varphi',
+	  \ '\\chi','\\omega',
+	  \ '\%(\*\|\\ast\|\\star\)','\\top','\%(|\|\\vert\|\\mid\)','\\Vert','\\ne[q]\?','\\int',
+	  "\ '\\perp','\\\%(big\)\?cap','\\\%(big\)\?cup','\\superset\%(eq\)\?',
+    \ ]
+  else
+    let s:tex_superscriptSymbols= g:tex_superscriptSymbols
+  endif
+  if !exists("g:tex_subscriptSymbols")
+    let s:tex_subscriptSymbols= ['\\beta','\\rho','\\psi',
+	  "\ '\\varphi',
+	  \ '\\gamma','\\chi',
+    \ ]
+  else
+    let s:tex_subscriptSymbols= g:tex_subscriptSymbols
+  endif
+  
+  let s:superscript_pattern= '\^{\%(' . s:tex_superscripts . '\|\s'
+  for temp_symbol in s:tex_superscriptSymbols
+    let s:superscript_pattern .= '\|'.temp_symbol
+  endfor
+  let s:superscript_pattern .= '\)\+}'
+  let s:subscript_pattern= '_{\%(' . s:tex_subscripts . '\|\s'
+  for temp_symbol in s:tex_subscriptSymbols
+    let s:subscript_pattern .= '\|'.temp_symbol
+  endfor
+  let s:subscript_pattern .= '\)\+}'
+  
+  syn clear texSuperscript texSuperscripts
+  "syn region texSuperscript matchgroup=texDelimiter start='\^{\%([0-9a-zA-W.,:;+-<>/()=]\| \|\\alpha\|\\beta\)\+}'ms=s,me=s+1 end='}' concealends keepend contained contains=texSuperscripts
+  exe "syn match texSuperscript '" . s:superscript_pattern . "' keepend contained contains=texSuperscripts"
+  syn match texSuperscripts '\%(\^{\|\s\|}\)' contained conceal nextgroup=texSuperscripts
+  syn clear texSubscript texSubscripts
+  exe "syn match texSubscript '" . s:subscript_pattern . "' keepend contained contains=texSubscripts"
+  syn match texSubscripts '\%(_{\|\s\|}\)' contained conceal nextgroup=texSubscripts
+  
+  " s:SuperSub:
+  " Seems the below (and <https://github.com/vim/vim/blob/master/runtime/syntax/tex.vim>) are all that available
+  " (see <https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts>, <https://stackoverflow.com/questions/17908593/how-to-find-the-unicode-of-the-subscript-alphabet>).
+  " The unicode code values are also not continuous.
+  fun! s:SuperSub(leader, pat, cchar)
+    let l:group = (a:leader == '\^')? "texSuperscript": "texSubscript"
+    if a:pat =~# '^\\' || (a:leader == '\^' && a:pat =~# s:tex_superscripts) || (a:leader == '_' && a:pat =~# s:tex_subscripts)
+      "exe "syn match texMathSymbol '".a:leader."\%(".a:pat."\|{\s*".a:pat."\s*}\)"."' contained conceal cchar=".a:cchar
+      exe "syn match ".l:group." '".a:leader.a:pat."' contained conceal cchar=".a:cchar
+      exe "syn match ".l:group."s '".a:pat."' contained conceal cchar=".a:cchar." nextgroup=".l:group."s"
+    endif
+  endfun
+  
+  call s:SuperSub('\^','0','⁰')
+  call s:SuperSub('\^','1','¹')
+  call s:SuperSub('\^','2','²')
+  call s:SuperSub('\^','3','³')
+  call s:SuperSub('\^','4','⁴')
+  call s:SuperSub('\^','5','⁵')
+  call s:SuperSub('\^','6','⁶')
+  call s:SuperSub('\^','7','⁷')
+  call s:SuperSub('\^','8','⁸')
+  call s:SuperSub('\^','9','⁹')
+  call s:SuperSub('\^','a','ᵃ')
+  call s:SuperSub('\^','b','ᵇ')
+  call s:SuperSub('\^','c','ᶜ')
+  call s:SuperSub('\^','d','ᵈ')
+  call s:SuperSub('\^','e','ᵉ')
+  call s:SuperSub('\^','f','ᶠ')
+  call s:SuperSub('\^','g','ᵍ')
+  call s:SuperSub('\^','h','ʰ')
+  call s:SuperSub('\^','i','ⁱ')
+  call s:SuperSub('\^','j','ʲ')
+  call s:SuperSub('\^','k','ᵏ')
+  call s:SuperSub('\^','l','ˡ')
+  call s:SuperSub('\^','m','ᵐ')
+  call s:SuperSub('\^','n','ⁿ')
+  call s:SuperSub('\^','o','ᵒ')
+  call s:SuperSub('\^','p','ᵖ')
+  call s:SuperSub('\^','r','ʳ')
+  call s:SuperSub('\^','s','ˢ')
+  call s:SuperSub('\^','t','ᵗ')
+  call s:SuperSub('\^','u','ᵘ')
+  call s:SuperSub('\^','v','ᵛ')
+  call s:SuperSub('\^','w','ʷ')
+  call s:SuperSub('\^','x','ˣ')
+  call s:SuperSub('\^','y','ʸ')
+  call s:SuperSub('\^','z','ᶻ')
+  call s:SuperSub('\^','A','ᴬ')
+  call s:SuperSub('\^','B','ᴮ')
+  call s:SuperSub('\^','D','ᴰ')
+  call s:SuperSub('\^','E','ᴱ')
+  call s:SuperSub('\^','G','ᴳ')
+  call s:SuperSub('\^','H','ᴴ')
+  call s:SuperSub('\^','I','ᴵ')
+  call s:SuperSub('\^','J','ᴶ')
+  call s:SuperSub('\^','K','ᴷ')
+  call s:SuperSub('\^','L','ᴸ')
+  call s:SuperSub('\^','M','ᴹ')
+  call s:SuperSub('\^','N','ᴺ')
+  call s:SuperSub('\^','O','ᴼ')
+  call s:SuperSub('\^','P','ᴾ')
+  call s:SuperSub('\^','R','ᴿ')
+  call s:SuperSub('\^','T','ᵀ')
+  call s:SuperSub('\^','U','ᵁ')
+  call s:SuperSub('\^','V','ⱽ')
+  call s:SuperSub('\^','W','ᵂ')
+  call s:SuperSub('\^',',','︐')
+  call s:SuperSub('\^',':','︓')
+  call s:SuperSub('\^',';','︔')
+  call s:SuperSub('\^','+','⁺')
+  call s:SuperSub('\^','-','⁻')
+  call s:SuperSub('\^','<','ᑉ') " originally '˂'
+  call s:SuperSub('\^','>','˃')
+  call s:SuperSub('\^','/','ᐟ') " originally 'ˊ'
+  call s:SuperSub('\^','(','⁽')
+  call s:SuperSub('\^',')','⁾')
+  call s:SuperSub('\^','\.','˙')
+  call s:SuperSub('\^','=','˭')
+  call s:SuperSub('\^','\\alpha','ᵅ')
+  call s:SuperSub('\^','\\beta','ᵝ')
+  call s:SuperSub('\^','\\gamma','ᵞ')
+  call s:SuperSub('\^','\\Gamma','ᣘ')
+  call s:SuperSub('\^','\\delta','ᵟ')
+  call s:SuperSub('\^','\\Delta','ᐞ')
+  call s:SuperSub('\^','\\\%(veps\|varepsilon\)','ᵋ')
+  "call s:SuperSub('\^','\\eps\%(ilon\)\?','ᵋ') " Aggressive
+  call s:SuperSub('\^','\\Lambda','ᶺ')
+  call s:SuperSub('\^','\\theta','ᶿ')
+  call s:SuperSub('\^','\\rho','ᣖ')
+  call s:SuperSub('\^','\\sigma','ᣙ')
+  call s:SuperSub('\^','\\iota','ᶥ')
+  call s:SuperSub('\^','\\Phi','ᶲ')
+  "call s:SuperSub('\^','\\varphi','ᵠ')
+  call s:SuperSub('\^','\\psi','ᵠ') "'ᵠ' is named and appears '^\varphi' in the unicode book <https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts>, but seems like '^\psi' in terminals
+  call s:SuperSub('\^','\\chi','ᵡ')
+  call s:SuperSub('\^','\\omega','ᐜ')
+  call s:SuperSub('\^','\%(\*\|\\ast\|\\star\)','˟')
+  call s:SuperSub('\^','\\top','ᵀ')
+  call s:SuperSub('\^','\%(|\|\\vert\|\\mid\)','ᑊ')
+  call s:SuperSub('\^','\\Vert','ᐦ')
+  call s:SuperSub('\^','\\ne[q]\?','ᙾ')
+  call s:SuperSub('\^','\\int','ᶴ')
+  "call s:SuperSub('\^','\\perp','ᗮ')
+  "call s:SuperSub('\^','\\\%(big\)\?cap','ᐢ')
+  "call s:SuperSub('\^','\\\%(big\)\?cup','ᐡ')
+  "call s:SuperSub('\^','\\superset\%(eq\)\?','ᐣ')
+  syn match texMathSymbol '\\trs\>' contained conceal cchar=ᵀ
+  
+  call s:SuperSub('_','0','₀')
+  call s:SuperSub('_','1','₁')
+  call s:SuperSub('_','2','₂')
+  call s:SuperSub('_','3','₃')
+  call s:SuperSub('_','4','₄')
+  call s:SuperSub('_','5','₅')
+  call s:SuperSub('_','6','₆')
+  call s:SuperSub('_','7','₇')
+  call s:SuperSub('_','8','₈')
+  call s:SuperSub('_','9','₉')
+  call s:SuperSub('_','a','ₐ')
+  call s:SuperSub('_','e','ₑ')
+  call s:SuperSub('_','h','ₕ')
+  call s:SuperSub('_','i','ᵢ')
+  call s:SuperSub('_','j','ⱼ')
+  call s:SuperSub('_','k','ₖ')
+  call s:SuperSub('_','l','ₗ')
+  call s:SuperSub('_','m','ₘ')
+  call s:SuperSub('_','n','ₙ')
+  call s:SuperSub('_','o','ₒ')
+  call s:SuperSub('_','p','ₚ')
+  call s:SuperSub('_','r','ᵣ')
+  call s:SuperSub('_','s','ₛ')
+  call s:SuperSub('_','t','ₜ')
+  call s:SuperSub('_','u','ᵤ')
+  call s:SuperSub('_','v','ᵥ')
+  call s:SuperSub('_','x','ₓ')
+  call s:SuperSub('_',',','︐')
+  call s:SuperSub('_','+','₊')
+  call s:SuperSub('_','-','₋')
+  call s:SuperSub('_','/','ˏ')
+  call s:SuperSub('_','(','₍')
+  call s:SuperSub('_',')','₎')
+  call s:SuperSub('_','\.','‸')
+  call s:SuperSub('_','=','₌') " New character! If set `g:tex_subscripts` in '.vimrc', include it.
+  call s:SuperSub('_','\\beta','ᵦ')
+  call s:SuperSub('_','\\rho','ᵨ')
+  "call s:SuperSub('_','\\varphi','ᵩ')
+  call s:SuperSub('_','\\psi','ᵩ') "'ᵩ' is named and appears '_\varphi' in the unicode book <https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts>, but seems like '_\psi' in terminals
+  call s:SuperSub('_','\\gamma','ᵧ')
+  call s:SuperSub('_','\\chi','ᵪ')
+  
+  delfun s:SuperSub
+endif
 
 " refeq, figref, eqnref, eqnsref, ...
-"
-" Switch phi and varphi (not script)
 
