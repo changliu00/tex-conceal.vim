@@ -1,7 +1,24 @@
+" Original file is https://github.com/KeitaNakamura/tex-conceal.vim
+" Original file is https://github.com/wjakob/wjakob.vim/blob/master/after/syntax/tex.vim
+
 if !has('conceal')
   finish
 endif
 
+" by default, enable all region-based highlighting
+let s:tex_fast= "bcmMprsSvV"
+if exists("g:tex_fast")
+  if type(g:tex_fast) != 1
+    " g:tex_fast exists and is not a string, so
+    " turn off all optional region-based highighting
+    let s:tex_fast= ""
+  else
+    let s:tex_fast= g:tex_fast
+  endif
+endif
+
+" let user determine which classes of concealment will be supported
+"   a=accents/ligatures d=delimiters m=math symbols  g=Greek  s=superscripts/subscripts
 if !exists("g:tex_conceal")
   let s:tex_conceal= 'abdmgsS'
 else
@@ -41,10 +58,30 @@ endif
 " for i in range(0,51)
 " 	exec 'normal! iU'.printf('%x', 0x1D538+i).'  '
 " endfor
-
-" Original file is https://github.com/KeitaNakamura/tex-conceal.vim
-
-" Original file is https://github.com/wjakob/wjakob.vim/blob/master/after/syntax/tex.vim
+" " bold numbers
+" for i in range(0,9)
+" 	exec 'normal! iU'.printf('%x', 0x1D7CE+i).'  '
+" endfor
+" " blackboard double-struck numbers
+" for i in range(0,9)
+" 	exec 'normal! iU'.printf('%x', 0x1D7D8+i).'  '
+" endfor
+" " bold greek (capital)
+" for i in range(0,25)
+" 	exec 'normal! iU'.printf('%x', 0x1D6A8+i).'  '
+" endfor
+" " bold greek (lower)
+" for i in range(0,31)
+" 	exec 'normal! iU'.printf('%x', 0x1D6C2+i).'  '
+" endfor
+" " bold italic greek (bm) (capital)
+" for i in range(0,25)
+" 	exec 'normal! iU'.printf('%x', 0x1D71C+i).'  '
+" endfor
+" " bold italic greek (bm) (lower)
+" for i in range(0,31)
+" 	exec 'normal! iU'.printf('%x', 0x1D736+i).'  '
+" endfor
 
 " not defined in vim/runtime/syntax/tex.vim
 syn match texMathSymbol '\\langle\>\s*' contained conceal cchar=⟨
@@ -60,8 +97,6 @@ syn match texMathSymbol '\\longrightarrow\>' contained conceal cchar=→
 syn match texMathSymbol '\\Longrightarrow\>' contained conceal cchar=⇒
 
 " logical symbols
-syn match texMathSymbol '\\lor\>' contained conceal cchar=∨
-syn match texMathSymbol '\\land\>' contained conceal cchar=∧
 syn match texMathSymbol '\\lnot\>' contained conceal cchar=¬
 syn match texMathSymbol '\\implies\>' contained conceal cchar=⇒
 syn match texMathSymbol '\\geqslant\>' contained conceal cchar=⩾
@@ -94,32 +129,42 @@ syn match texMathSymbol '\%(\\mathbb{\s*W\s*}\|\\bbW\>\)' contained conceal ccha
 syn match texMathSymbol '\%(\\mathbb{\s*X\s*}\|\\bbX\>\)' contained conceal cchar=𝕏
 syn match texMathSymbol '\%(\\mathbb{\s*Y\s*}\|\\bbY\>\)' contained conceal cchar=𝕐
 syn match texMathSymbol '\%(\\mathbb{\s*Z\s*}\|\\bbZ\>\)' contained conceal cchar=ℤ
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*a\s*}\|\\bbaa\>\)' contained conceal cchar=𝕒
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*b\s*}\|\\bbbb\>\)' contained conceal cchar=𝕓
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*c\s*}\|\\bbcc\>\)' contained conceal cchar=𝕔
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*d\s*}\|\\bbdd\>\)' contained conceal cchar=𝕕
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*e\s*}\|\\bbee\>\)' contained conceal cchar=𝕖
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*f\s*}\|\\bbff\>\)' contained conceal cchar=𝕗
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*g\s*}\|\\bbgg\>\)' contained conceal cchar=𝕘
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*h\s*}\|\\bbhh\>\)' contained conceal cchar=𝕙
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*i\s*}\|\\bbii\>\)' contained conceal cchar=𝕚
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*j\s*}\|\\bbjj\>\)' contained conceal cchar=𝕛
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*k\s*}\|\\bbkk\>\)' contained conceal cchar=𝕜
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*l\s*}\|\\bbll\>\)' contained conceal cchar=𝕝
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*m\s*}\|\\bbmm\>\)' contained conceal cchar=𝕞
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*n\s*}\|\\bbnn\>\)' contained conceal cchar=𝕟
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*o\s*}\|\\bboo\>\)' contained conceal cchar=𝕠
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*p\s*}\|\\bbpp\>\)' contained conceal cchar=𝕡
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*q\s*}\|\\bbqq\>\)' contained conceal cchar=𝕢
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*r\s*}\|\\bbrr\>\)' contained conceal cchar=𝕣
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*s\s*}\|\\bbss\>\)' contained conceal cchar=𝕤
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*t\s*}\|\\bbtt\>\)' contained conceal cchar=𝕥
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*u\s*}\|\\bbuu\>\)' contained conceal cchar=𝕦
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*v\s*}\|\\bbvv\>\)' contained conceal cchar=𝕧
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*w\s*}\|\\bbww\>\)' contained conceal cchar=𝕨
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*x\s*}\|\\bbxx\>\)' contained conceal cchar=𝕩
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*y\s*}\|\\bbyy\>\)' contained conceal cchar=𝕪
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*z\s*}\|\\bbzz\>\)' contained conceal cchar=𝕫
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*a\s*}\|\\bbaa\>\)' contained conceal cchar=𝕒
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*b\s*}\|\\bbbb\>\)' contained conceal cchar=𝕓
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*c\s*}\|\\bbcc\>\)' contained conceal cchar=𝕔
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*d\s*}\|\\bbdd\>\)' contained conceal cchar=𝕕
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*e\s*}\|\\bbee\>\)' contained conceal cchar=𝕖
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*f\s*}\|\\bbff\>\)' contained conceal cchar=𝕗
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*g\s*}\|\\bbgg\>\)' contained conceal cchar=𝕘
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*h\s*}\|\\bbhh\>\)' contained conceal cchar=𝕙
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*i\s*}\|\\bbii\>\)' contained conceal cchar=𝕚
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*j\s*}\|\\bbjj\>\)' contained conceal cchar=𝕛
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*k\s*}\|\\bbkk\>\)' contained conceal cchar=𝕜
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*l\s*}\|\\bbll\>\)' contained conceal cchar=𝕝
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*m\s*}\|\\bbmm\>\)' contained conceal cchar=𝕞
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*n\s*}\|\\bbnn\>\)' contained conceal cchar=𝕟
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*o\s*}\|\\bboo\>\)' contained conceal cchar=𝕠
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*p\s*}\|\\bbpp\>\)' contained conceal cchar=𝕡
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*q\s*}\|\\bbqq\>\)' contained conceal cchar=𝕢
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*r\s*}\|\\bbrr\>\)' contained conceal cchar=𝕣
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*s\s*}\|\\bbss\>\)' contained conceal cchar=𝕤
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*t\s*}\|\\bbtt\>\)' contained conceal cchar=𝕥
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*u\s*}\|\\bbuu\>\)' contained conceal cchar=𝕦
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*v\s*}\|\\bbvv\>\)' contained conceal cchar=𝕧
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*w\s*}\|\\bbww\>\)' contained conceal cchar=𝕨
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*x\s*}\|\\bbxx\>\)' contained conceal cchar=𝕩
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*y\s*}\|\\bbyy\>\)' contained conceal cchar=𝕪
+"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*z\s*}\|\\bbzz\>\)' contained conceal cchar=𝕫
+syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*0\s*}\|\\bbzro\>\)' contained conceal cchar=𝟘
+syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*1\s*}\|\\bbone\>\)' contained conceal cchar=𝟙
+syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*2\s*}\|\\bbtwo\>\)' contained conceal cchar=𝟚
+syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*3\s*}\|\\bbthr\>\)' contained conceal cchar=𝟛
+syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*4\s*}\|\\bbfor\>\)' contained conceal cchar=𝟜
+syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*5\s*}\|\\bbfiv\>\)' contained conceal cchar=𝟝
+syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*6\s*}\|\\bbsix\>\)' contained conceal cchar=𝟞
+syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*7\s*}\|\\bbsev\>\)' contained conceal cchar=𝟟
+syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*8\s*}\|\\bbeit\>\)' contained conceal cchar=𝟠
+syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*9\s*}\|\\bbnin\>\)' contained conceal cchar=𝟡
 
 " \mathsf characters
 syn match texMathSymbol '\%(\\mathsf{\s*A\s*}\|\\sfA\>\)' contained conceal cchar=𝖠
@@ -390,6 +435,16 @@ syn match texMathSymbol '\%(\\mathbf{\s*w\s*}\|\\bfww\>\)' contained conceal cch
 syn match texMathSymbol '\%(\\mathbf{\s*x\s*}\|\\bfxx\>\)' contained conceal cchar=𝐱
 syn match texMathSymbol '\%(\\mathbf{\s*y\s*}\|\\bfyy\>\)' contained conceal cchar=𝐲
 syn match texMathSymbol '\%(\\mathbf{\s*z\s*}\|\\bfzz\>\)' contained conceal cchar=𝐳
+syn match texMathSymbol '\%(\\mathbf{\s*0\s*}\|\\bfzro\>\)' contained conceal cchar=𝟎
+syn match texMathSymbol '\%(\\mathbf{\s*1\s*}\|\\bfone\>\)' contained conceal cchar=𝟏
+syn match texMathSymbol '\%(\\mathbf{\s*2\s*}\|\\bftwo\>\)' contained conceal cchar=𝟐
+syn match texMathSymbol '\%(\\mathbf{\s*3\s*}\|\\bfthr\>\)' contained conceal cchar=𝟑
+syn match texMathSymbol '\%(\\mathbf{\s*4\s*}\|\\bffor\>\)' contained conceal cchar=𝟒
+syn match texMathSymbol '\%(\\mathbf{\s*5\s*}\|\\bffiv\>\)' contained conceal cchar=𝟓
+syn match texMathSymbol '\%(\\mathbf{\s*6\s*}\|\\bfsix\>\)' contained conceal cchar=𝟔
+syn match texMathSymbol '\%(\\mathbf{\s*7\s*}\|\\bfsev\>\)' contained conceal cchar=𝟕
+syn match texMathSymbol '\%(\\mathbf{\s*8\s*}\|\\bfeit\>\)' contained conceal cchar=𝟖
+syn match texMathSymbol '\%(\\mathbf{\s*9\s*}\|\\bfnin\>\)' contained conceal cchar=𝟗
 
 " \bm characters
 syn match texMathSymbol '\%(\\bm{\s*A\s*}\|\\bmA\>\)' contained conceal cchar=𝑨
@@ -553,6 +608,106 @@ syn match texMathSymbol '\%(\\textnormal{\s*x\s*}\|\\tnxx\>\)' contained conceal
 syn match texMathSymbol '\%(\\textnormal{\s*y\s*}\|\\tnyy\>\)' contained conceal cchar=y
 syn match texMathSymbol '\%(\\textnormal{\s*z\s*}\|\\tnzz\>\)' contained conceal cchar=z
 
+"" Symbols with decorator
+" \bar
+syn match texMathSymbol '\%(\\bar{\s*a\s*}\|\\aab\>\)' contained conceal cchar=ā
+syn match texMathSymbol '\%(\\bar{\s*A\s*}\|\\Ab\>\)' contained conceal cchar=Ā
+syn match texMathSymbol '\%(\\bar{\s*e\s*}\|\\eeb\>\)' contained conceal cchar=ē
+syn match texMathSymbol '\%(\\bar{\s*E\s*}\|\\Eb\>\)' contained conceal cchar=Ē
+syn match texMathSymbol '\%(\\bar{\s*i\s*}\|\\iib\>\)' contained conceal cchar=ī
+syn match texMathSymbol '\%(\\bar{\s*I\s*}\|\\Ib\>\)' contained conceal cchar=Ī
+syn match texMathSymbol '\%(\\bar{\s*o\s*}\|\\oob\>\)' contained conceal cchar=ō
+syn match texMathSymbol '\%(\\bar{\s*O\s*}\|\\Ob\>\)' contained conceal cchar=Ō
+syn match texMathSymbol '\%(\\bar{\s*u\s*}\|\\uub\>\)' contained conceal cchar=ū
+syn match texMathSymbol '\%(\\bar{\s*U\s*}\|\\Ub\>\)' contained conceal cchar=Ū
+
+" \dot
+syn match texMathSymbol '\\\%(dot{\s*B\s*}\|Bd\>\)' contained conceal cchar=Ḃ
+syn match texMathSymbol '\\\%(dot{\s*b\s*}\|bbd\>\)' contained conceal cchar=ḃ
+syn match texMathSymbol '\\\%(dot{\s*D\s*}\|Dd\>\)' contained conceal cchar=Ḋ
+syn match texMathSymbol '\\\%(dot{\s*d\s*}\|ddd\>\)' contained conceal cchar=ḋ
+syn match texMathSymbol '\\\%(dot{\s*F\s*}\|Fd\>\)' contained conceal cchar=Ḟ
+syn match texMathSymbol '\\\%(dot{\s*f\s*}\|ffd\>\)' contained conceal cchar=ḟ
+syn match texMathSymbol '\\\%(dot{\s*H\s*}\|Hd\>\)' contained conceal cchar=Ḣ
+syn match texMathSymbol '\\\%(dot{\s*h\s*}\|hhd\>\)' contained conceal cchar=ḣ
+syn match texMathSymbol '\\\%(dot{\s*M\s*}\|Md\>\)' contained conceal cchar=Ṁ
+syn match texMathSymbol '\\\%(dot{\s*m\s*}\|mmd\>\)' contained conceal cchar=ṁ
+syn match texMathSymbol '\\\%(dot{\s*N\s*}\|Nd\>\)' contained conceal cchar=Ṅ
+syn match texMathSymbol '\\\%(dot{\s*n\s*}\|nnd\>\)' contained conceal cchar=ṅ
+syn match texMathSymbol '\\\%(dot{\s*P\s*}\|Pd\>\)' contained conceal cchar=Ṗ
+syn match texMathSymbol '\\\%(dot{\s*p\s*}\|ppd\>\)' contained conceal cchar=ṗ
+syn match texMathSymbol '\\\%(dot{\s*R\s*}\|Rd\>\)' contained conceal cchar=Ṙ
+syn match texMathSymbol '\\\%(dot{\s*r\s*}\|rrd\>\)' contained conceal cchar=ṙ
+syn match texMathSymbol '\\\%(dot{\s*S\s*}\|Sd\>\)' contained conceal cchar=Ṡ
+syn match texMathSymbol '\\\%(dot{\s*s\s*}\|ssd\>\)' contained conceal cchar=ṡ
+syn match texMathSymbol '\\\%(dot{\s*T\s*}\|Td\>\)' contained conceal cchar=Ṫ
+syn match texMathSymbol '\\\%(dot{\s*t\s*}\|ttd\>\)' contained conceal cchar=ṫ
+syn match texMathSymbol '\\\%(dot{\s*W\s*}\|Wd\>\)' contained conceal cchar=Ẇ
+syn match texMathSymbol '\\\%(dot{\s*w\s*}\|wwd\>\)' contained conceal cchar=ẇ
+syn match texMathSymbol '\\\%(dot{\s*X\s*}\|Xd\>\)' contained conceal cchar=Ẋ
+syn match texMathSymbol '\\\%(dot{\s*x\s*}\|xxd\>\)' contained conceal cchar=ẋ
+syn match texMathSymbol '\\\%(dot{\s*Y\s*}\|Yd\>\)' contained conceal cchar=Ẏ
+syn match texMathSymbol '\\\%(dot{\s*y\s*}\|yyd\>\)' contained conceal cchar=ẏ
+syn match texMathSymbol '\\\%(dot{\s*Z\s*}\|Zd\>\)' contained conceal cchar=Ż
+syn match texMathSymbol '\\\%(dot{\s*z\s*}\|zzd\>\)' contained conceal cchar=ż
+
+syn match texMathSymbol '\\\%(dot{\s*C\s*}\|Cd\>\)' contained conceal cchar=Ċ
+syn match texMathSymbol '\\\%(dot{\s*c\s*}\|ccd\>\)' contained conceal cchar=ċ
+syn match texMathSymbol '\\\%(dot{\s*E\s*}\|Ed\>\)' contained conceal cchar=Ė
+syn match texMathSymbol '\\\%(dot{\s*e\s*}\|eed\>\)' contained conceal cchar=ė
+syn match texMathSymbol '\\\%(dot{\s*G\s*}\|Gd\>\)' contained conceal cchar=Ġ
+syn match texMathSymbol '\\\%(dot{\s*g\s*}\|ggd\>\)' contained conceal cchar=ġ
+syn match texMathSymbol '\\\%(dot{\s*I\s*}\|Idot\>\)' contained conceal cchar=İ
+
+syn match texMathSymbol '\\\%(dot{\s*A\s*}\|Ad\>\)' contained conceal cchar=Ȧ
+syn match texMathSymbol '\\\%(dot{\s*a\s*}\|aad\>\)' contained conceal cchar=ȧ
+syn match texMathSymbol '\\\%(dot{\s*O\s*}\|Od\>\)' contained conceal cchar=Ȯ
+syn match texMathSymbol '\\\%(dot{\s*o\s*}\|ood\>\)' contained conceal cchar=ȯ
+
+" \hat
+syn match texMathSymbol '\\\%(hat{\s*a\s*}\|aah\>\)' contained conceal cchar=â
+syn match texMathSymbol '\\\%(hat{\s*A\s*}\|Ah\>\)' contained conceal cchar=Â
+syn match texMathSymbol '\\\%(hat{\s*c\s*}\|cch\>\)' contained conceal cchar=ĉ
+syn match texMathSymbol '\\\%(hat{\s*C\s*}\|Ch\>\)' contained conceal cchar=Ĉ
+syn match texMathSymbol '\\\%(hat{\s*e\s*}\|eeh\>\)' contained conceal cchar=ê
+syn match texMathSymbol '\\\%(hat{\s*E\s*}\|Eh\>\)' contained conceal cchar=Ê
+syn match texMathSymbol '\\\%(hat{\s*g\s*}\|ggh\>\)' contained conceal cchar=ĝ
+syn match texMathSymbol '\\\%(hat{\s*G\s*}\|Gh\>\)' contained conceal cchar=Ĝ
+syn match texMathSymbol '\\\%(hat{\s*h\s*}\|hhh\>\)' contained conceal cchar=ĥ
+syn match texMathSymbol '\\\%(hat{\s*H\s*}\|Hh\>\)' contained conceal cchar=Ĥ
+syn match texMathSymbol '\\\%(hat{\s*i\s*}\|iih\>\)' contained conceal cchar=î
+syn match texMathSymbol '\\\%(hat{\s*I\s*}\|Ih\>\)' contained conceal cchar=Î
+syn match texMathSymbol '\\\%(hat{\s*l\s*}\|llh\>\)' contained conceal cchar=ľ
+syn match texMathSymbol '\\\%(hat{\s*L\s*}\|Lh\>\)' contained conceal cchar=Ľ
+syn match texMathSymbol '\\\%(hat{\s*o\s*}\|ooh\>\)' contained conceal cchar=ô
+syn match texMathSymbol '\\\%(hat{\s*O\s*}\|Oh\>\)' contained conceal cchar=Ô
+syn match texMathSymbol '\\\%(hat{\s*s\s*}\|ssh\>\)' contained conceal cchar=ŝ
+syn match texMathSymbol '\\\%(hat{\s*S\s*}\|Sh\>\)' contained conceal cchar=Ŝ
+syn match texMathSymbol '\\\%(hat{\s*u\s*}\|uuh\>\)' contained conceal cchar=û
+syn match texMathSymbol '\\\%(hat{\s*U\s*}\|Uh\>\)' contained conceal cchar=Û
+syn match texMathSymbol '\\\%(hat{\s*w\s*}\|wwh\>\)' contained conceal cchar=ŵ
+syn match texMathSymbol '\\\%(hat{\s*W\s*}\|Wh\>\)' contained conceal cchar=Ŵ
+"syn match texMathSymbol '\\\%(hat{\s*x\s*}\|xxh\>\)' contained conceal cchar=x̂
+"syn match texMathSymbol '\\\%(hat{\s*X\s*}\|Xh\>\)' contained conceal cchar=X̂
+syn match texMathSymbol '\\\%(hat{\s*y\s*}\|yyh\>\)' contained conceal cchar=ŷ
+syn match texMathSymbol '\\\%(hat{\s*Y\s*}\|Yh\>\)' contained conceal cchar=Ŷ
+
+" \tilde
+syn match texMathSymbol '\\\%(tilde{\s*a\s*}\|aat\>\)' contained conceal cchar=ã
+syn match texMathSymbol '\\\%(tilde{\s*A\s*}\|At\>\)' contained conceal cchar=Ã
+syn match texMathSymbol '\\\%(tilde{\s*e\s*}\|eet\>\)' contained conceal cchar=ẽ
+syn match texMathSymbol '\\\%(tilde{\s*E\s*}\|Et\>\)' contained conceal cchar=Ẽ
+syn match texMathSymbol '\\\%(tilde{\s*i\s*}\|iit\>\)' contained conceal cchar=ĩ
+syn match texMathSymbol '\\\%(tilde{\s*I\s*}\|It\>\)' contained conceal cchar=Ĩ
+syn match texMathSymbol '\\\%(tilde{\s*n\s*}\|nnt\>\)' contained conceal cchar=ñ
+syn match texMathSymbol '\\\%(tilde{\s*N\s*}\|Nt\>\)' contained conceal cchar=Ñ
+syn match texMathSymbol '\\\%(tilde{\s*o\s*}\|oot\>\)' contained conceal cchar=õ
+syn match texMathSymbol '\\\%(tilde{\s*O\s*}\|Ot\>\)' contained conceal cchar=Õ
+syn match texMathSymbol '\\\%(tilde{\s*u\s*}\|uut\>\)' contained conceal cchar=ũ
+syn match texMathSymbol '\\\%(tilde{\s*U\s*}\|Ut\>\)' contained conceal cchar=Ũ
+syn match texMathSymbol '\\\%(tilde{\s*y\s*}\|yyt\>\)' contained conceal cchar=ỹ
+syn match texMathSymbol '\\\%(tilde{\s*Y\s*}\|Yt\>\)' contained conceal cchar=Ỹ
+
 " Greek letters
 if s:tex_conceal =~# 'g'
   " alias
@@ -561,7 +716,147 @@ if s:tex_conceal =~# 'g'
   " switch `phi` and `varphi`
   syn match texGreek '\\phi\>' contained conceal cchar=φ
   syn match texGreek '\\varphi\>' contained conceal cchar=ϕ
+
+  " \mathrm
+  syn match texGreek '\\\%(mathrm{\s*\\alpha\>\s*}\|rmalpha\>\)' contained conceal cchar=α
+  syn match texGreek '\\\%(mathrm{\s*\\beta\>\s*}\|rmbeta\>\)' contained conceal cchar=β
+  syn match texGreek '\\\%(mathrm{\s*\\gamma\>\s*}\|rmgamma\>\)' contained conceal cchar=γ
+  syn match texGreek '\\\%(mathrm{\s*\\delta\>\s*}\|rmdelta\>\)' contained conceal cchar=δ
+  syn match texGreek '\\\%(mathrm{\s*\\epsilon\>\s*}\|rmepsilon\>\)' contained conceal cchar=ϵ
+  syn match texGreek '\\\%(mathrm{\s*\\eps\>\s*}\|rmeps\>\)' contained conceal cchar=ϵ
+  syn match texGreek '\\\%(mathrm{\s*\\varepsilon\>\s*}\|rmvarepsilon\>\)' contained conceal cchar=ε
+  syn match texGreek '\\\%(mathrm{\s*\\veps\>\s*}\|rmveps\>\)' contained conceal cchar=ε
+  syn match texGreek '\\\%(mathrm{\s*\\zeta\>\s*}\|rmzeta\>\)' contained conceal cchar=ζ
+  syn match texGreek '\\\%(mathrm{\s*\\eta\>\s*}\|rmeta\>\)' contained conceal cchar=η
+  syn match texGreek '\\\%(mathrm{\s*\\theta\>\s*}\|rmtheta\>\)' contained conceal cchar=θ
+  syn match texGreek '\\\%(mathrm{\s*\\vartheta\>\s*}\|rmvartheta\>\)' contained conceal cchar=ϑ
+  syn match texGreek '\\\%(mathrm{\s*\\iota\>\s*}\|rmiota\>\)' contained conceal cchar=ι
+  syn match texGreek '\\\%(mathrm{\s*\\kappa\>\s*}\|rmkappa\>\)' contained conceal cchar=κ
+  syn match texGreek '\\\%(mathrm{\s*\\lambda\>\s*}\|rmlambda\>\)' contained conceal cchar=λ
+  syn match texGreek '\\\%(mathrm{\s*\\mu\>\s*}\|rmmu\>\)' contained conceal cchar=μ
+  syn match texGreek '\\\%(mathrm{\s*\\nu\>\s*}\|rmnu\>\)' contained conceal cchar=ν
+  syn match texGreek '\\\%(mathrm{\s*\\xi\>\s*}\|rmxi\>\)' contained conceal cchar=ξ
+  syn match texGreek '\\\%(mathrm{\s*\\pi\>\s*}\|rmpi\>\)' contained conceal cchar=π
+  syn match texGreek '\\\%(mathrm{\s*\\varpi\>\s*}\|rmvarpi\>\)' contained conceal cchar=ϖ
+  syn match texGreek '\\\%(mathrm{\s*\\rho\>\s*}\|rmrho\>\)' contained conceal cchar=ρ
+  syn match texGreek '\\\%(mathrm{\s*\\varrho\>\s*}\|rmvarrho\>\)' contained conceal cchar=ϱ
+  syn match texGreek '\\\%(mathrm{\s*\\sigma\>\s*}\|rmsigma\>\)' contained conceal cchar=σ
+  syn match texGreek '\\\%(mathrm{\s*\\varsigma\>\s*}\|rmvarsigma\>\)' contained conceal cchar=ς
+  syn match texGreek '\\\%(mathrm{\s*\\tau\>\s*}\|rmtau\>\)' contained conceal cchar=τ
+  syn match texGreek '\\\%(mathrm{\s*\\upsilon\>\s*}\|rmupsilon\>\)' contained conceal cchar=υ
+  syn match texGreek '\\\%(mathrm{\s*\\phi\>\s*}\|rmphi\>\)' contained conceal cchar=φ
+  syn match texGreek '\\\%(mathrm{\s*\\varphi\>\s*}\|rmvarphi\>\)' contained conceal cchar=ϕ
+  syn match texGreek '\\\%(mathrm{\s*\\chi\>\s*}\|rmchi\>\)' contained conceal cchar=χ
+  syn match texGreek '\\\%(mathrm{\s*\\psi\>\s*}\|rmpsi\>\)' contained conceal cchar=ψ
+  syn match texGreek '\\\%(mathrm{\s*\\omega\>\s*}\|rmomega\>\)' contained conceal cchar=ω
+  syn match texGreek '\\\%(mathrm{\s*\\Gamma\>\s*}\|rmGamma\>\)' contained conceal cchar=Γ
+  syn match texGreek '\\\%(mathrm{\s*\\Delta\>\s*}\|rmDelta\>\)' contained conceal cchar=Δ
+  syn match texGreek '\\\%(mathrm{\s*\\Theta\>\s*}\|rmTheta\>\)' contained conceal cchar=Θ
+  syn match texGreek '\\\%(mathrm{\s*\\Lambda\>\s*}\|rmLambda\>\)' contained conceal cchar=Λ
+  syn match texGreek '\\\%(mathrm{\s*\\Xi\>\s*}\|rmXi\>\)' contained conceal cchar=Ξ
+  syn match texGreek '\\\%(mathrm{\s*\\Pi\>\s*}\|rmPi\>\)' contained conceal cchar=Π
+  syn match texGreek '\\\%(mathrm{\s*\\Sigma\>\s*}\|rmSigma\>\)' contained conceal cchar=Σ
+  syn match texGreek '\\\%(mathrm{\s*\\Upsilon\>\s*}\|rmUpsilon\>\)' contained conceal cchar=Υ
+  syn match texGreek '\\\%(mathrm{\s*\\Phi\>\s*}\|rmPhi\>\)' contained conceal cchar=Φ
+  syn match texGreek '\\\%(mathrm{\s*\\Chi\>\s*}\|rmChi\>\)' contained conceal cchar=Χ
+  syn match texGreek '\\\%(mathrm{\s*\\Psi\>\s*}\|rmPsi\>\)' contained conceal cchar=Ψ
+  syn match texGreek '\\\%(mathrm{\s*\\Omega\>\s*}\|rmOmega\>\)' contained conceal cchar=Ω
+
+  " \mathbf
+  syn match texGreek '\\\%(mathbf{\s*\\alpha\>\s*}\|bfalpha\>\)' contained conceal cchar=𝛂
+  syn match texGreek '\\\%(mathbf{\s*\\beta\>\s*}\|bfbeta\>\)' contained conceal cchar=𝛃
+  syn match texGreek '\\\%(mathbf{\s*\\gamma\>\s*}\|bfgamma\>\)' contained conceal cchar=𝛄
+  syn match texGreek '\\\%(mathbf{\s*\\delta\>\s*}\|bfdelta\>\)' contained conceal cchar=𝛅
+  syn match texGreek '\\\%(mathbf{\s*\\epsilon\>\s*}\|bfepsilon\>\)' contained conceal cchar=𝛜
+  syn match texGreek '\\\%(mathbf{\s*\\eps\>\s*}\|bfeps\>\)' contained conceal cchar=𝛜
+  syn match texGreek '\\\%(mathbf{\s*\\varepsilon\>\s*}\|bfvarepsilon\>\)' contained conceal cchar=𝛆
+  syn match texGreek '\\\%(mathbf{\s*\\veps\>\s*}\|bfveps\>\)' contained conceal cchar=𝛆
+  syn match texGreek '\\\%(mathbf{\s*\\zeta\>\s*}\|bfzeta\>\)' contained conceal cchar=𝛇
+  syn match texGreek '\\\%(mathbf{\s*\\eta\>\s*}\|bfeta\>\)' contained conceal cchar=𝛈
+  syn match texGreek '\\\%(mathbf{\s*\\theta\>\s*}\|bftheta\>\)' contained conceal cchar=𝛉
+  syn match texGreek '\\\%(mathbf{\s*\\vartheta\>\s*}\|bfvartheta\>\)' contained conceal cchar=𝛝
+  syn match texGreek '\\\%(mathbf{\s*\\iota\>\s*}\|bfiota\>\)' contained conceal cchar=𝛊
+  syn match texGreek '\\\%(mathbf{\s*\\kappa\>\s*}\|bfkappa\>\)' contained conceal cchar=𝛋
+  syn match texGreek '\\\%(mathbf{\s*\\lambda\>\s*}\|bflambda\>\)' contained conceal cchar=𝛌
+  syn match texGreek '\\\%(mathbf{\s*\\mu\>\s*}\|bfmu\>\)' contained conceal cchar=𝛍
+  syn match texGreek '\\\%(mathbf{\s*\\nu\>\s*}\|bfnu\>\)' contained conceal cchar=𝛎
+  syn match texGreek '\\\%(mathbf{\s*\\xi\>\s*}\|bfxi\>\)' contained conceal cchar=𝛏
+  syn match texGreek '\\\%(mathbf{\s*\\pi\>\s*}\|bfpi\>\)' contained conceal cchar=𝛑
+  syn match texGreek '\\\%(mathbf{\s*\\varpi\>\s*}\|bfvarpi\>\)' contained conceal cchar=𝛡
+  syn match texGreek '\\\%(mathbf{\s*\\rho\>\s*}\|bfrho\>\)' contained conceal cchar=𝛒
+  syn match texGreek '\\\%(mathbf{\s*\\varrho\>\s*}\|bfvarrho\>\)' contained conceal cchar=𝛠
+  syn match texGreek '\\\%(mathbf{\s*\\sigma\>\s*}\|bfsigma\>\)' contained conceal cchar=𝛔
+  syn match texGreek '\\\%(mathbf{\s*\\varsigma\>\s*}\|bfvarsigma\>\)' contained conceal cchar=𝛓
+  syn match texGreek '\\\%(mathbf{\s*\\tau\>\s*}\|bftau\>\)' contained conceal cchar=𝛕
+  syn match texGreek '\\\%(mathbf{\s*\\upsilon\>\s*}\|bfupsilon\>\)' contained conceal cchar=𝛖
+  syn match texGreek '\\\%(mathbf{\s*\\phi\>\s*}\|bfphi\>\)' contained conceal cchar=𝛟
+  syn match texGreek '\\\%(mathbf{\s*\\varphi\>\s*}\|bfvarphi\>\)' contained conceal cchar=𝛗
+  syn match texGreek '\\\%(mathbf{\s*\\chi\>\s*}\|bfchi\>\)' contained conceal cchar=𝛘
+  syn match texGreek '\\\%(mathbf{\s*\\psi\>\s*}\|bfpsi\>\)' contained conceal cchar=𝛙
+  syn match texGreek '\\\%(mathbf{\s*\\omega\>\s*}\|bfomega\>\)' contained conceal cchar=𝛚
+  syn match texGreek '\\\%(mathbf{\s*\\Gamma\>\s*}\|bfGamma\>\)' contained conceal cchar=𝚪
+  syn match texGreek '\\\%(mathbf{\s*\\Delta\>\s*}\|bfDelta\>\)' contained conceal cchar=𝚫
+  syn match texGreek '\\\%(mathbf{\s*\\Theta\>\s*}\|bfTheta\>\)' contained conceal cchar=𝚯
+  syn match texGreek '\\\%(mathbf{\s*\\Lambda\>\s*}\|bfLambda\>\)' contained conceal cchar=𝚲
+  syn match texGreek '\\\%(mathbf{\s*\\Xi\>\s*}\|bfXi\>\)' contained conceal cchar=𝚵
+  syn match texGreek '\\\%(mathbf{\s*\\Pi\>\s*}\|bfPi\>\)' contained conceal cchar=𝚷
+  syn match texGreek '\\\%(mathbf{\s*\\Sigma\>\s*}\|bfSigma\>\)' contained conceal cchar=𝚺
+  syn match texGreek '\\\%(mathbf{\s*\\Upsilon\>\s*}\|bfUpsilon\>\)' contained conceal cchar=𝚼
+  syn match texGreek '\\\%(mathbf{\s*\\Phi\>\s*}\|bfPhi\>\)' contained conceal cchar=𝚽
+  syn match texGreek '\\\%(mathbf{\s*\\Chi\>\s*}\|bfChi\>\)' contained conceal cchar=𝚾
+  syn match texGreek '\\\%(mathbf{\s*\\Psi\>\s*}\|bfPsi\>\)' contained conceal cchar=𝚿
+  syn match texGreek '\\\%(mathbf{\s*\\Omega\>\s*}\|bfOmega\>\)' contained conceal cchar=𝛀
+
+  " \bm
+  syn match texGreek '\\\%(bm{\s*\\alpha\>\s*}\|bmalpha\>\)' contained conceal cchar=𝜶
+  syn match texGreek '\\\%(bm{\s*\\beta\>\s*}\|bmbeta\>\)' contained conceal cchar=𝜷
+  syn match texGreek '\\\%(bm{\s*\\gamma\>\s*}\|bmgamma\>\)' contained conceal cchar=𝜸
+  syn match texGreek '\\\%(bm{\s*\\delta\>\s*}\|bmdelta\>\)' contained conceal cchar=𝜹
+  syn match texGreek '\\\%(bm{\s*\\epsilon\>\s*}\|bmepsilon\>\)' contained conceal cchar=𝝐
+  syn match texGreek '\\\%(bm{\s*\\eps\>\s*}\|bmeps\>\)' contained conceal cchar=𝝐
+  syn match texGreek '\\\%(bm{\s*\\varepsilon\>\s*}\|bmvarepsilon\>\)' contained conceal cchar=𝜺
+  syn match texGreek '\\\%(bm{\s*\\veps\>\s*}\|bmveps\>\)' contained conceal cchar=𝜺
+  syn match texGreek '\\\%(bm{\s*\\zeta\>\s*}\|bmzeta\>\)' contained conceal cchar=𝜻
+  syn match texGreek '\\\%(bm{\s*\\eta\>\s*}\|bmeta\>\)' contained conceal cchar=𝜼
+  syn match texGreek '\\\%(bm{\s*\\theta\>\s*}\|bmtheta\>\)' contained conceal cchar=𝜽
+  syn match texGreek '\\\%(bm{\s*\\vartheta\>\s*}\|bmvartheta\>\)' contained conceal cchar=𝝑
+  syn match texGreek '\\\%(bm{\s*\\iota\>\s*}\|bmiota\>\)' contained conceal cchar=𝜾
+  syn match texGreek '\\\%(bm{\s*\\kappa\>\s*}\|bmkappa\>\)' contained conceal cchar=𝜿
+  syn match texGreek '\\\%(bm{\s*\\lambda\>\s*}\|bmlambda\>\)' contained conceal cchar=𝝀
+  syn match texGreek '\\\%(bm{\s*\\mu\>\s*}\|bmmu\>\)' contained conceal cchar=𝝁
+  syn match texGreek '\\\%(bm{\s*\\nu\>\s*}\|bmnu\>\)' contained conceal cchar=𝝂
+  syn match texGreek '\\\%(bm{\s*\\xi\>\s*}\|bmxi\>\)' contained conceal cchar=𝝃
+  syn match texGreek '\\\%(bm{\s*\\pi\>\s*}\|bmpi\>\)' contained conceal cchar=𝝅
+  syn match texGreek '\\\%(bm{\s*\\varpi\>\s*}\|bmvarpi\>\)' contained conceal cchar=𝝕
+  syn match texGreek '\\\%(bm{\s*\\rho\>\s*}\|bmrho\>\)' contained conceal cchar=𝝆
+  syn match texGreek '\\\%(bm{\s*\\varrho\>\s*}\|bmvarrho\>\)' contained conceal cchar=𝝔
+  syn match texGreek '\\\%(bm{\s*\\sigma\>\s*}\|bmsigma\>\)' contained conceal cchar=𝝈
+  syn match texGreek '\\\%(bm{\s*\\varsigma\>\s*}\|bmvarsigma\>\)' contained conceal cchar=𝝇
+  syn match texGreek '\\\%(bm{\s*\\tau\>\s*}\|bmtau\>\)' contained conceal cchar=𝝉
+  syn match texGreek '\\\%(bm{\s*\\upsilon\>\s*}\|bmupsilon\>\)' contained conceal cchar=𝝊
+  syn match texGreek '\\\%(bm{\s*\\phi\>\s*}\|bmphi\>\)' contained conceal cchar=𝝓
+  syn match texGreek '\\\%(bm{\s*\\varphi\>\s*}\|bmvarphi\>\)' contained conceal cchar=𝝋
+  syn match texGreek '\\\%(bm{\s*\\chi\>\s*}\|bmchi\>\)' contained conceal cchar=𝝌
+  syn match texGreek '\\\%(bm{\s*\\psi\>\s*}\|bmpsi\>\)' contained conceal cchar=𝝍
+  syn match texGreek '\\\%(bm{\s*\\omega\>\s*}\|bmomega\>\)' contained conceal cchar=𝝎
+  syn match texGreek '\\\%(bm{\s*\\Gamma\>\s*}\|b[mi]\?Gamma\>\)' contained conceal cchar=𝜞
+  syn match texGreek '\\\%(bm{\s*\\Delta\>\s*}\|b[mi]\?Delta\>\)' contained conceal cchar=𝜟
+  syn match texGreek '\\\%(bm{\s*\\Theta\>\s*}\|b[mi]\?Theta\>\)' contained conceal cchar=𝜣
+  syn match texGreek '\\\%(bm{\s*\\Lambda\>\s*}\|b[mi]\?Lambda\>\)' contained conceal cchar=𝜦
+  syn match texGreek '\\\%(bm{\s*\\Xi\>\s*}\|b[mi]\?Xi\>\)' contained conceal cchar=𝜩
+  syn match texGreek '\\\%(bm{\s*\\Pi\>\s*}\|b[mi]\?Pi\>\)' contained conceal cchar=𝜫
+  syn match texGreek '\\\%(bm{\s*\\Sigma\>\s*}\|b[mi]\?Sigma\>\)' contained conceal cchar=𝜮
+  syn match texGreek '\\\%(bm{\s*\\Upsilon\>\s*}\|b[mi]\?Upsilon\>\)' contained conceal cchar=𝜰
+  syn match texGreek '\\\%(bm{\s*\\Phi\>\s*}\|b[mi]\?Phi\>\)' contained conceal cchar=𝜱
+  syn match texGreek '\\\%(bm{\s*\\Chi\>\s*}\|b[mi]\?Chi\>\)' contained conceal cchar=𝜲
+  syn match texGreek '\\\%(bm{\s*\\Psi\>\s*}\|b[mi]\?Psi\>\)' contained conceal cchar=𝜳
+  syn match texGreek '\\\%(bm{\s*\\Omega\>\s*}\|b[mi]\?Omega\>\)' contained conceal cchar=𝜴
 endif
+
+syn match texMathSymbol '\\bf\%({\s*\\nabla\>\s*}\|nabla\>\)' contained conceal cchar=𝛁
+syn match texMathSymbol '\\bf\%({\s*\\partial\>\s*}\|partial\>\)' contained conceal cchar=𝛛
+syn match texMathSymbol '\\bm\%({\s*\\nabla\>\s*}\|nabla\>\)' contained conceal cchar=𝛁"𝜵
+syn match texMathSymbol '\\bm\%({\s*\\partial\>\s*}\|partial\>\)' contained conceal cchar=𝝏
 
 " Other symbols
 syn match texSpecialChar '\\#' contained conceal cchar=#
@@ -569,25 +864,20 @@ syn match texSpecialChar '\\#' contained conceal cchar=#
 syn match texStatement '``' contained conceal cchar=“
 syn match texStatement '\'\'' contained conceal cchar=”
 syn match texStatement '\\item\>' contained conceal cchar=•
-syn match texStatement '\\ldots' contained conceal cchar=…
-syn match texStatement '\\quad' contained conceal cchar=  
-syn match texStatement '\\qquad' contained conceal cchar=    
 "syn match texStatement '\\\[' contained conceal cchar=⟦
 "syn match texStatement '\\\]' contained conceal cchar=⟧
-syn match texDelimiter '\\{' contained conceal cchar={
-syn match texDelimiter '\\}' contained conceal cchar=}
 syn match texMathSymbol '\\setminus\>' contained conceal cchar=\
-syn match texMathSymbol '\\coloneqq\>' contained conceal cchar=≔
-syn match texMathSymbol '\\colon\>' contained conceal cchar=:
-syn match texMathSymbol '\\:' contained conceal cchar= 
-syn match texMathSymbol '\\;' contained conceal cchar= 
-syn match texMathSymbol '\\,' contained conceal cchar= 
-syn match texMathSymbol '\\ ' contained conceal cchar= 
-syn match texMathSymbol '\\quad' contained conceal cchar=  
-syn match texMathSymbol '\\qquad' contained conceal cchar=    
+"syn match texMathSymbol '\\coloneqq\>' contained conceal cchar=≔
+"syn match texMathSymbol '\\colon\>' contained conceal cchar=:
+"syn match texMathSymbol '\\:' contained conceal cchar= 
+"syn match texMathSymbol '\\;' contained conceal cchar= 
+"syn match texMathSymbol '\\,' contained conceal cchar= 
+"syn match texMathSymbol '\\ ' contained conceal cchar= 
+"syn match texMathSymbol '\\quad' contained conceal cchar=  
+"syn match texMathSymbol '\\qquad' contained conceal cchar=    
 syn match texMathSymbol '\\sqrt' contained conceal cchar=√
-syn match texMathSymbol '\\sqrt\[3]' contained conceal cchar=∛
-syn match texMathSymbol '\\sqrt\[4]' contained conceal cchar=∜
+"syn match texMathSymbol '\\sqrt\[3]' contained conceal cchar=∛
+"syn match texMathSymbol '\\sqrt\[4]' contained conceal cchar=∜
 syn match texMathSymbol '\\\!' contained conceal
 syn match texMathSymbol '\\therefore' contained conceal cchar=∴
 syn match texMathSymbol '\\because' contained conceal cchar=∵
@@ -620,14 +910,14 @@ end
 "  syn region texMathText matchgroup=texStatement start='\\\%(\%(inter\)\=text\|mbox\|mathrm\)\s*{' skip="\\\\\|\\[{}]" end='}' concealends keepend contains=@texFoldGroup containedin=texMathMatcher
 "endif
 
-syn region texBoldMathText  matchgroup=texStatement start='\\\%(mathbf\|bm\|symbf\|pmb\){' end='}' concealends contains=@texMathZoneGroup containedin=texMathMatcher
-syn cluster texMathZoneGroup add=texBoldMathText
+"syn region texBoldMathText  matchgroup=texStatement start='\\\%(mathbf\|bm\|symbf\|pmb\){' end='}' concealends contains=@texMathZoneGroup containedin=texMathMatcher
+"syn cluster texMathZoneGroup add=texBoldMathText
 
 syn region texBoldItalStyle matchgroup=texTypeStyle start="\\emph\s*{" end="}" concealends contains=@texItalGroup
 syn region texItalStyle  matchgroup=texTypeStyle start="\\emph\s*{" end="}" concealends contains=@texItalGroup
 syn region texMatcher matchgroup=texTypeStyle start="\\\%(underline\|uline\){" end="}" concealends contains=@texItalGroup
 
-hi texBoldMathText cterm=bold gui=bold
+"hi texBoldMathText cterm=bold gui=bold
 hi texUnderStyle cterm=underline gui=underline
 match texUnderStyle /\\\%(underline\|uline\){\zs\(.\([^\\]}\)\@<!\)\+\ze}/
 
@@ -652,8 +942,8 @@ if s:tex_conceal =~# 's'
 	  \ '\\Lambda','\\theta','\\rho','\\sigma','\\iota','\\Phi','\\psi',
 	  "\ '\\varphi',
 	  \ '\\chi','\\omega',
-	  \ '\%(\*\|\\ast\|\\star\)','\\top','\%(|\|\\vert\|\\mid\)','\\Vert','\\ne[q]\?','\\int',
-	  "\ '\\perp','\\\%(big\)\?cap','\\\%(big\)\?cup','\\superset\%(eq\)\?',
+	  \ '\%(\*\|\\ast\|\\star\)','\\top','\\ne[q]\?',
+	  "\ '\\int','\%(|\|\\vert\|\\mid\)','\\Vert','\\perp','\\parallel','\\\%(big\)\?cap','\\\%(big\)\?cup','\\superset\%(eq\)\?',
     \ ]
   else
     let s:tex_superscriptSymbols= g:tex_superscriptSymbols
@@ -692,7 +982,7 @@ if s:tex_conceal =~# 's'
   " The unicode code values are also not continuous.
   fun! s:SuperSub(leader, pat, cchar)
     let l:group = (a:leader == '\^')? "texSuperscript": "texSubscript"
-    if a:pat =~# '^\\' || (a:leader == '\^' && a:pat =~# s:tex_superscripts) || (a:leader == '_' && a:pat =~# s:tex_subscripts)
+	if (a:leader == '\^' && (len(a:pat) == 1)? (a:pat =~# s:tex_superscripts): (index(s:tex_superscriptSymbols,a:pat) >= 0)) || (a:leader == '_' && (len(a:pat) == 1)? (a:pat =~# s:tex_subscripts): (index(s:tex_subscriptSymbols,a:pat) >= 0))
       "exe "syn match texMathSymbol '".a:leader."\%(".a:pat."\|{\s*".a:pat."\s*}\)"."' contained conceal cchar=".a:cchar
       exe "syn match ".l:group." '".a:leader.a:pat."' contained conceal cchar=".a:cchar
       exe "syn match ".l:group."s '".a:pat."' contained conceal cchar=".a:cchar." nextgroup=".l:group."s"
@@ -785,14 +1075,15 @@ if s:tex_conceal =~# 's'
   call s:SuperSub('\^','\\omega','ᐜ')
   call s:SuperSub('\^','\%(\*\|\\ast\|\\star\)','˟')
   call s:SuperSub('\^','\\top','ᵀ')
-  call s:SuperSub('\^','\%(|\|\\vert\|\\mid\)','ᑊ')
-  call s:SuperSub('\^','\\Vert','ᐦ')
   call s:SuperSub('\^','\\ne[q]\?','ᙾ')
   call s:SuperSub('\^','\\int','ᶴ')
-  "call s:SuperSub('\^','\\perp','ᗮ')
-  "call s:SuperSub('\^','\\\%(big\)\?cap','ᐢ')
-  "call s:SuperSub('\^','\\\%(big\)\?cup','ᐡ')
-  "call s:SuperSub('\^','\\superset\%(eq\)\?','ᐣ')
+  call s:SuperSub('\^','\%(|\|\\vert\|\\mid\)','ᑊ')
+  call s:SuperSub('\^','\\Vert','ᐦ')
+  call s:SuperSub('\^','\\perp','ᗮ')
+  call s:SuperSub('\^','\\parallel','ᐥ')
+  call s:SuperSub('\^','\\\%(big\)\?cap','ᐢ')
+  call s:SuperSub('\^','\\\%(big\)\?cup','ᐡ')
+  call s:SuperSub('\^','\\superset\%(eq\)\?','ᐣ')
   syn match texMathSymbol '\\trs\>' contained conceal cchar=ᵀ
   
   call s:SuperSub('_','0','₀')
@@ -840,5 +1131,7 @@ if s:tex_conceal =~# 's'
   delfun s:SuperSub
 endif
 
-" refeq, figref, eqnref, eqnsref, ...
+" New refs
+syn region texRefZone matchgroup=texStatement start="\\\(eqns\?\|secs\?\|chap\|figs\?\|tabs\?\|ftn\|thms\?\|props\?\|lems\?\|cors\?\|assms\?\|defs\?\|algs\?\|supp\)ref{"	end="}\|%stopzone\>"	contains=@texRefGroup
+syn region texRefZone matchgroup=texStatement start="\\refeq"	end="}\|%stopzone\>"	contains=@texRefGroup
 
