@@ -926,12 +926,12 @@ match texUnderStyle /\\\%(underline\|uline\){\zs\(.\([^\\]}\)\@<!\)\+\ze}/
 " Simple number super/sub-scripts
 if s:tex_conceal =~# 's'
   if !exists("g:tex_superscripts")
-    let s:tex_superscripts= '[0-9a-pr-zABDEG-PRT-W,:;+-<>/().=]' " The standard 'tex.vim': '[0-9a-zA-W.,:;+-<>/()=]', which overcovers
+    let s:tex_superscripts= '[0-9a-pr-zABDEG-PRT-W,:;+-<>/().='']' " The standard 'tex.vim': '[0-9a-zA-W.,:;+-<>/()=]', which overcovers
   else
     let s:tex_superscripts= g:tex_superscripts
   endif
   if !exists("g:tex_subscripts")
-    let s:tex_subscripts= '[0-9aehijklmnoprstuvx,+-/().=]' " follows standard 'tex.vim' except '='. Or, `let s:tex_subscripts='[0-9aeijoruvx,+-/().]'` if others cannot be displayed properly
+    let s:tex_subscripts= '[0-9aehijklmnoprstuvx,:+-<>/().='']' " follows standard 'tex.vim' except '='. Or, `let s:tex_subscripts='[0-9aeijoruvx,+-/().]'` if others cannot be displayed properly
   else
     let s:tex_subscripts= g:tex_subscripts
   endif
@@ -942,7 +942,7 @@ if s:tex_conceal =~# 's'
 	  \ '\\Lambda','\\theta','\\rho','\\sigma','\\iota','\\Phi','\\psi',
 	  "\ '\\varphi',
 	  \ '\\chi','\\omega',
-	  \ '\%(\*\|\\ast\|\\star\)','\\top','\\ne[q]\?',
+	  \ '\%(\*\|\\ast\|\\star\)','\\top','\\cdot','\\ne[q]\?',
 	  "\ '\\int','\%(|\|\\vert\|\\mid\)','\\Vert','\\perp','\\parallel','\\\%(big\)\?cap','\\\%(big\)\?cup','\\superset\%(eq\)\?',
     \ ]
   else
@@ -952,6 +952,7 @@ if s:tex_conceal =~# 's'
     let s:tex_subscriptSymbols= ['\\beta','\\rho','\\psi',
 	  "\ '\\varphi',
 	  \ '\\gamma','\\chi',
+	  "\ '\%(|\|\\vert\|\\mid\)','\\Vert',
     \ ]
   else
     let s:tex_subscriptSymbols= g:tex_subscriptSymbols
@@ -1043,18 +1044,21 @@ if s:tex_conceal =~# 's'
   call s:SuperSub('\^','U','ᵁ')
   call s:SuperSub('\^','V','ⱽ')
   call s:SuperSub('\^','W','ᵂ')
-  call s:SuperSub('\^',',','︐')
+  " ˈˊʾ𝄒ʼ›˒⋅ᐧᣟ˙· " <https://stackoverflow.com/questions/34350441/is-there-an-unicode-symbol-for-superscript-comma>
+  " ﮼ˌ⸝ˎˏ˒˓˱˲ " <https://www.gaijin.at/en/infos/unicode-character-table-modifiers#U02B0>
+  call s:SuperSub('\^',',','˒') " originally '︐'
   call s:SuperSub('\^',':','︓')
   call s:SuperSub('\^',';','︔')
   call s:SuperSub('\^','+','⁺')
   call s:SuperSub('\^','-','⁻')
   call s:SuperSub('\^','<','ᑉ') " originally '˂'
-  call s:SuperSub('\^','>','˃')
+  call s:SuperSub('\^','>','›') " originally '˃'
   call s:SuperSub('\^','/','ᐟ') " originally 'ˊ'
   call s:SuperSub('\^','(','⁽')
   call s:SuperSub('\^',')','⁾')
   call s:SuperSub('\^','\.','˙')
   call s:SuperSub('\^','=','˭')
+  if "'" =~# s:tex_superscripts | syn match texSuperscripts "'" contained conceal cchar=ˊ nextgroup=texSuperscripts | endif " New character! If set `g:tex_subscripts` in '.vimrc', include it.
   call s:SuperSub('\^','\\alpha','ᵅ')
   call s:SuperSub('\^','\\beta','ᵝ')
   call s:SuperSub('\^','\\gamma','ᵞ')
@@ -1075,6 +1079,7 @@ if s:tex_conceal =~# 's'
   call s:SuperSub('\^','\\omega','ᐜ')
   call s:SuperSub('\^','\%(\*\|\\ast\|\\star\)','˟')
   call s:SuperSub('\^','\\top','ᵀ')
+  call s:SuperSub('\^','\\cdot','·')
   call s:SuperSub('\^','\\ne[q]\?','ᙾ')
   call s:SuperSub('\^','\\int','ᶴ')
   call s:SuperSub('\^','\%(|\|\\vert\|\\mid\)','ᑊ')
@@ -1113,20 +1118,26 @@ if s:tex_conceal =~# 's'
   call s:SuperSub('_','u','ᵤ')
   call s:SuperSub('_','v','ᵥ')
   call s:SuperSub('_','x','ₓ')
-  call s:SuperSub('_',',','︐')
+  call s:SuperSub('_',',','ˏ') " originally '︐'
+  call s:SuperSub('_',':','﹕') " New character! If set `g:tex_subscripts` in '.vimrc', include it.
   call s:SuperSub('_','+','₊')
   call s:SuperSub('_','-','₋')
-  call s:SuperSub('_','/','ˏ')
+  call s:SuperSub('_','<','˱') " New character! If set `g:tex_subscripts` in '.vimrc', include it.
+  call s:SuperSub('_','>','˲') " New character! If set `g:tex_subscripts` in '.vimrc', include it.
+  call s:SuperSub('_','/','⸝') " originally 'ˏ'
   call s:SuperSub('_','(','₍')
   call s:SuperSub('_',')','₎')
   call s:SuperSub('_','\.','‸')
   call s:SuperSub('_','=','₌') " New character! If set `g:tex_subscripts` in '.vimrc', include it.
+  if "'" =~# s:tex_subscripts | syn match texSubscripts "'" contained conceal cchar=˒ nextgroup=texSubscripts | endif " New character! If set `g:tex_subscripts` in '.vimrc', include it.
   call s:SuperSub('_','\\beta','ᵦ')
   call s:SuperSub('_','\\rho','ᵨ')
   "call s:SuperSub('_','\\varphi','ᵩ')
   call s:SuperSub('_','\\psi','ᵩ') "'ᵩ' is named and appears '_\varphi' in the unicode book <https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts>, but seems like '_\psi' in terminals
   call s:SuperSub('_','\\gamma','ᵧ')
   call s:SuperSub('_','\\chi','ᵪ')
+  call s:SuperSub('_','\%(|\|\\vert\|\\mid\)','ˌ')
+  call s:SuperSub('_','\\Vert','﮼')
   
   delfun s:SuperSub
 endif
@@ -1134,4 +1145,33 @@ endif
 " New refs
 syn region texRefZone matchgroup=texStatement start="\\\(eqns\?\|secs\?\|chap\|figs\?\|tabs\?\|ftn\|thms\?\|props\?\|lems\?\|cors\?\|assms\?\|defs\?\|algs\?\|supp\)ref{"	end="}\|%stopzone\>"	contains=@texRefGroup
 syn region texRefZone matchgroup=texStatement start="\\refeq"	end="}\|%stopzone\>"	contains=@texRefGroup
+
+" if s:tex_fast =~# 'M'
+"   if has("conceal") && &enc == 'utf-8' && s:tex_conceal =~# 'd'
+"     "syn region texMathZoneV	matchgroup=texDelimiter start='\\lrparen{'			matchgroup=texDelimiter	end='}\|%stopzone\>'			keepend concealends contains=@texMathZoneGroup
+"     fun! s:DelimCmd(name, lcchar, rcchar)
+" 	  let l:subname= "texMathDelim".a:name
+" 	  exe "syn match ".l:subname." '".'\\lr'.a:name.'\*\={[^{]\{-}}'."' contained contains=texSpecialChar,texStatement,texMathMatcher,".l:subname."s"
+" 	  exe "syn match ".l:subname."s '".'\\lr'.a:name.'\*\={'."' contained conceal cchar=".a:lcchar
+" 	  exe "syn match ".l:subname."s '".'}'."' contained conceal cchar=".a:rcchar
+" 	  exe "syn cluster texMathZoneGroup          add=".l:subname
+" 	  exe "syn cluster texMathMatchGroup         add=".l:subname
+" 	  "hi def link texMathParen texMath
+" 	  "hi def link texMathParenDelim texMathDelim
+" 	  exe "hi def link ".l:subname." texStatement"
+" 	  exe "hi def link ".l:subname."s texStatement"
+"     endfun
+" 	call s:DelimCmd('paren','(',')')
+" 	call s:DelimCmd('brack','[',']')
+" 	call s:DelimCmd('brace','{','}')
+" 	call s:DelimCmd('vert','|','|')
+" 	call s:DelimCmd('Vert','‖','‖')
+" 	call s:DelimCmd('angle','⟨','⟩')
+" 	call s:DelimCmd('ceil','⌈','⌉')
+" 	call s:DelimCmd('floor','⌊','⌋')
+" 	call s:DelimCmd('bra','|','⟩')
+" 	call s:DelimCmd('ket','⟨','|')
+"     delfun s:DelimCmd
+"   endif
+" endif
 
