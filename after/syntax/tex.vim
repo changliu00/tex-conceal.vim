@@ -1174,11 +1174,11 @@ endif
 syn region texRefZone matchgroup=texStatement start="\\\(eqns\?\|secs\?\|chap\|figs\?\|tabs\?\|ftn\|thms\?\|props\?\|lems\?\|cors\?\|assms\?\|defs\?\|algs\?\|supp\)ref{"	end="}\|%stopzone\>"	contains=@texRefGroup
 syn region texRefZone matchgroup=texStatement start="\\refeq"	end="}\|%stopzone\>"	contains=@texRefGroup
 
+let s:depth1brace= '{'.'[^{}]*}'
+let s:depth1or2brace= '{'.'\%('.'[^{}]*'.s:depth1brace.'\)*'.'[^{}]*}'
+let s:depth1or2or3brace= '{'.'\%('.'[^{}]*'.s:depth1or2brace.'\)*'.'[^{}]*}'
 if s:tex_fast =~# 'M'
   if has("conceal") && &enc == 'utf-8' && s:tex_conceal =~# 'd'
-    let s:depth1brace= '{'.'[^{}]*}'
-	let s:depth1or2brace= '{'.'\%('.'[^{}]*'.s:depth1brace.'\)*'.'[^{}]*}'
-	let s:depth1or2or3brace= '{'.'\%('.'[^{}]*'.s:depth1or2brace.'\)*'.'[^{}]*}'
 	""Plan 1
 	"syn region texZoneParen	matchgroup=texStatement start='\\lrparen{' cchar=( skip="\\\\\|\\[{}]" matchgroup=texStatement end='}\|%stopzone\>' cchar=) keepend concealends contains=texZoneParen,@texMathZoneGroup containedin=texMathZones
 	"syn cluster texMathZones		add=texZoneParen
@@ -1208,5 +1208,26 @@ if s:tex_fast =~# 'M'
 	call s:DelimCmd('ket','|','⟩',0)
     delfun s:DelimCmd
   endif
+
+  fun! s:FracDiff(name, cchar)
+	let l:subname= 'texFrac'.a:name
+    exe 'syn match '.l:subname.' ''\\frac'.a:name.s:depth1or2brace.s:depth1or2brace.''' transparent contained contains=texGreek,texMathSymbol,texMathOper,texMathDelim,texSpecialChar,texStatement,texMathMatcher,texSuperscript,texSubscript,'.l:subname.'first,'.l:subname.'second'.',texMathDelimlrparen,texMathDelimlrbrack,texMathDelimlrbrace,texMathDelimlrvert,texMathDelimCaplrVert,texMathDelimlrangle,texMathDelimlrceil,texMathDelimlrfloor,texMathDelimbra,texMathDelimket'
+	  \ .' containedin=texSuperscript,texSubscript,texMathDelimlrparen,texMathDelimlrbrack,texMathDelimlrbrace,texMathDelimlrvert,texMathDelimCaplrVert,texMathDelimlrangle,texMathDelimlrceil,texMathDelimlrfloor,texMathDelimbra,texMathDelimket'
+	exe 'syn match '.l:subname.'first ''\\frac'.a:name.s:depth1or2brace.''' transparent contained contains='l:subname.'firsts'.',texGreek,texMathSymbol,texMathOper,texMathDelim,texSpecialChar,texStatement,texMathMatcher,texSuperscript,texSubscript,texMathDelimlrparen,texMathDelimlrbrack,texMathDelimlrbrace,texMathDelimlrvert,texMathDelimCaplrVert,texMathDelimlrangle,texMathDelimlrceil,texMathDelimlrfloor,texMathDelimbra,texMathDelimket'
+	exe 'syn match '.l:subname.'firsts ''\\frac'.a:name.'{'' contained conceal cchar='.a:cchar.' nextgroup='.l:subname.'firsts'
+	exe 'syn match '.l:subname.'firsts ''}'' contained conceal cchar=/ nextgroup='.l:subname.'second'
+	exe 'syn match '.l:subname.'second '''.s:depth1or2brace.''' transparent contained contains='l:subname.'seconds'.',texGreek,texMathSymbol,texMathOper,texMathDelim,texSpecialChar,texStatement,texMathMatcher,texSuperscript,texSubscript,texMathDelimlrparen,texMathDelimlrbrack,texMathDelimlrbrace,texMathDelimlrvert,texMathDelimCaplrVert,texMathDelimlrangle,texMathDelimlrceil,texMathDelimlrfloor,texMathDelimbra,texMathDelimket'
+	exe 'syn match '.l:subname.'seconds ''{'' contained conceal cchar='.a:cchar.' nextgroup='.l:subname.'seconds'
+	exe 'syn match '.l:subname.'seconds ''}'' contained conceal'
+    exe 'syn cluster texMathZoneGroup          add='.l:subname
+    exe 'syn cluster texMathMatchGroup         add='.l:subname
+    exe 'hi def link '.l:subname.'firsts texStatement'
+    exe 'hi def link '.l:subname.'seconds texStatement'
+  endfun
+  call s:FracDiff('diff','𝚍')
+  call s:FracDiff('partial','∂')
+  call s:FracDiff('delta','δ')
+  call s:FracDiff('Delta','Δ')
+  delfun s:FracDiff
 endif
 
