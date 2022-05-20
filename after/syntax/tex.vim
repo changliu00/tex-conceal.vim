@@ -964,7 +964,7 @@ if s:tex_conceal =~# 's'
 	  \ '\\Lambda','\\theta','\\rho','\\sigma','\\iota','\\Phi','\\psi',
 	  "\ '\\varphi',
 	  \ '\\chi','\\omega',
-	  \ '\%(\*\|\\ast\|\\star\)','\\top','\\cdot','\\ne[q]\=',
+	  \ '\%(\*\|\\ast\|\\star\)','\\top','\\dagger','\\times','\\cdot\>','\\l\=dot\>','\\[cl]\=dots','\\neq\=',
 	  "\ '\\int','\%(|\|\\vert\|\\mid\)','\\Vert','\\perp','\\parallel','\\\%(big\)\=cap','\\\%(big\)\=cup','\\superset\%(eq\)\=',
     \ ]
   else
@@ -974,7 +974,7 @@ if s:tex_conceal =~# 's'
     let s:tex_subscriptSymbols= ['\\beta','\\rho','\\psi',
 	  "\ '\\varphi',
 	  \ '\\gamma','\\chi',
-	  \ '\\in',
+	  \ '\\in','\\times','\\cdot\>','\\l\=dot\>','\\[cl]\=dots',
 	  "\ '\%(|\|\\vert\|\\mid\)','\\Vert',
     \ ]
   else
@@ -1068,7 +1068,7 @@ if s:tex_conceal =~# 's'
   call s:SuperSub('\^','V','ⱽ')
   call s:SuperSub('\^','W','ᵂ')
   " ˈˊʾ𝄒ʼ›˒⋅ᐧᣟ˙· " <https://stackoverflow.com/questions/34350441/is-there-an-unicode-symbol-for-superscript-comma>
-  " ﮼ˌ⸝ˎˏ˒˓˱˲ " <https://www.gaijin.at/en/infos/unicode-character-table-modifiers#U02B0>
+  " 𑁉𐩐･﮲ꞏ・⸳⸱․·﮼ˌ⸝ˎˏ˒˓˱˲ " <https://www.gaijin.at/en/infos/unicode-character-table-modifiers#U02B0>
   call s:SuperSub('\^',',','˒') " originally '︐'
   call s:SuperSub('\^',':','︓')
   call s:SuperSub('\^',';','︔')
@@ -1104,7 +1104,11 @@ if s:tex_conceal =~# 's'
   call s:SuperSub('\^','\\omega','ᐜ')
   call s:SuperSub('\^','\%(\*\|\\ast\|\\star\)','˟')
   call s:SuperSub('\^','\\top','ᵀ')
-  call s:SuperSub('\^','\\cdot','·')
+  call s:SuperSub('\^','\\dagger','†')
+  call s:SuperSub('\^','\\times','ˣ')
+  call s:SuperSub('\^','\\cdot\>','·')
+  call s:SuperSub('\^','\\l\=dot\>','˙')
+  call s:SuperSub('\^','\\[cl]\=dots','⋯')
   call s:SuperSub('\^','\\ne[q]\=','ᙾ')
   call s:SuperSub('\^','\\int','ᶴ')
   call s:SuperSub('\^','\%(|\|\\vert\|\\mid\)','ᑊ')
@@ -1164,6 +1168,10 @@ if s:tex_conceal =~# 's'
   call s:SuperSub('_','\\gamma','ᵧ')
   call s:SuperSub('_','\\chi','ᵪ')
   call s:SuperSub('_','\\in','∊')
+  call s:SuperSub('_','\\times','༝')
+  call s:SuperSub('_','\\cdot\>','․')
+  call s:SuperSub('_','\\l\=dot\>','‸')
+  call s:SuperSub('_','\\[cl]\=dots','…')
   call s:SuperSub('_','\%(|\|\\vert\|\\mid\)','ˌ')
   call s:SuperSub('_','\\Vert','﮼')
   
