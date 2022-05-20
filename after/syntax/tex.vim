@@ -851,6 +851,28 @@ if s:tex_conceal =~# 'g'
   syn match texGreek '\\\%(bm{\s*\\Chi\>\s*}\|b[mi]\?Chi\>\)' contained conceal cchar=𝜲
   syn match texGreek '\\\%(bm{\s*\\Psi\>\s*}\|b[mi]\?Psi\>\)' contained conceal cchar=𝜳
   syn match texGreek '\\\%(bm{\s*\\Omega\>\s*}\|b[mi]\?Omega\>\)' contained conceal cchar=𝜴
+
+  " Greek letters with accents
+  syn match texGreek '\\alphab\>' contained conceal cchar=ᾱ
+  syn match texGreek '\\alphad\>' contained conceal cchar=ἀ
+  syn match texGreek '\\alphah\>' contained conceal cchar=ἃ
+  syn match texGreek '\\alphat\>' contained conceal cchar=ᾶ
+  "syn match texGreek '\\\%(veps\|varepsilon\)d\>' contained conceal cchar=ἐ
+  "syn match texGreek '\\\%(veps\|varepsilon\)h\>' contained conceal cchar=ἒ
+  syn match texGreek '\\etad\>' contained conceal cchar=ἠ
+  syn match texGreek '\\etah\>' contained conceal cchar=ἣ
+  syn match texGreek '\\etat\>' contained conceal cchar=ῆ
+  "syn match texGreek '\\iotab\>' contained conceal cchar=ῑ
+  "syn match texGreek '\\iotad\>' contained conceal cchar=ἰ
+  "syn match texGreek '\\iotah\>' contained conceal cchar=ἳ
+  "syn match texGreek '\\iotat\>' contained conceal cchar=ῖ
+  "syn match texGreek '\\upsilonb\>' contained conceal cchar=ῡ
+  "syn match texGreek '\\upsilond\>' contained conceal cchar=ὐ
+  "syn match texGreek '\\upsilonh\>' contained conceal cchar=ὓ
+  "syn match texGreek '\\upsilont\>' contained conceal cchar=ῦ
+  syn match texGreek '\\omegad\>' contained conceal cchar=ὠ
+  syn match texGreek '\\omegah\>' contained conceal cchar=ὣ
+  syn match texGreek '\\omegat\>' contained conceal cchar=ῶ
 endif
 
 syn match texMathSymbol '\\bf\%({\s*\\nabla\>\s*}\|nabla\>\)' contained conceal cchar=𝛁
@@ -926,12 +948,12 @@ match texUnderStyle /\\\%(underline\|uline\){\zs\(.\([^\\]}\)\@<!\)\+\ze}/
 " Simple number super/sub-scripts
 if s:tex_conceal =~# 's'
   if !exists("g:tex_superscripts")
-    let s:tex_superscripts= '[0-9a-pr-zABDEG-PRT-W,:;+-<>/().='']' " The standard 'tex.vim': '[0-9a-zA-W.,:;+-<>/()=]', which overcovers
+    let s:tex_superscripts= '[0-9a-pr-zABDEG-PRT-W,:;+-<>/().=''[\]]' " The standard 'tex.vim': '[0-9a-zA-W.,:;+-<>/()=]', which overcovers.
   else
     let s:tex_superscripts= g:tex_superscripts
   endif
   if !exists("g:tex_subscripts")
-    let s:tex_subscripts= '[0-9aehijklmnoprstuvx,:+-<>/().='']' " follows standard 'tex.vim' except '='. Or, `let s:tex_subscripts='[0-9aeijoruvx,+-/().]'` if others cannot be displayed properly
+    let s:tex_subscripts= '[0-9aehijklmnoprstuvx,:+-<>/().=''[\]]' " follows standard 'tex.vim' except '='. Or, `let s:tex_subscripts='[0-9aeijoruvx,+-/().]'` if others cannot be displayed properly
   else
     let s:tex_subscripts= g:tex_subscripts
   endif
@@ -952,6 +974,7 @@ if s:tex_conceal =~# 's'
     let s:tex_subscriptSymbols= ['\\beta','\\rho','\\psi',
 	  "\ '\\varphi',
 	  \ '\\gamma','\\chi',
+	  \ '\\in',
 	  "\ '\%(|\|\\vert\|\\mid\)','\\Vert',
     \ ]
   else
@@ -1058,7 +1081,9 @@ if s:tex_conceal =~# 's'
   call s:SuperSub('\^',')','⁾')
   call s:SuperSub('\^','\.','˙')
   call s:SuperSub('\^','=','˭')
-  if "'" =~# s:tex_superscripts | syn match texSuperscripts "'" contained conceal cchar=ˊ nextgroup=texSuperscripts | endif " New character! If set `g:tex_subscripts` in '.vimrc', include it.
+  if "'" =~# s:tex_superscripts | syn match texSuperscripts "'" contained conceal cchar=ˊ nextgroup=texSuperscripts | endif " New character! If set `g:tex_superscripts` in '.vimrc', include it.
+  if '\[' =~# s:tex_superscripts | syn match texSuperscripts '\[' contained conceal cchar=⸢ nextgroup=texSuperscripts | endif " New character! If set `g:tex_superscripts` in '.vimrc', include it.
+  if '\]' =~# s:tex_superscripts | syn match texSuperscripts '\]' contained conceal cchar=⸣ nextgroup=texSuperscripts | endif " New character! If set `g:tex_superscripts` in '.vimrc', include it.
   call s:SuperSub('\^','\\alpha','ᵅ')
   call s:SuperSub('\^','\\beta','ᵝ')
   call s:SuperSub('\^','\\gamma','ᵞ')
@@ -1130,12 +1155,15 @@ if s:tex_conceal =~# 's'
   call s:SuperSub('_','\.','‸')
   call s:SuperSub('_','=','₌') " New character! If set `g:tex_subscripts` in '.vimrc', include it.
   if "'" =~# s:tex_subscripts | syn match texSubscripts "'" contained conceal cchar=˒ nextgroup=texSubscripts | endif " New character! If set `g:tex_subscripts` in '.vimrc', include it.
+  if '\[' =~# s:tex_subscripts | syn match texSubscripts '\[' contained conceal cchar=⸤ nextgroup=texSubscripts | endif " New character! If set `g:tex_subscripts` in '.vimrc', include it.
+  if '\]' =~# s:tex_subscripts | syn match texSubscripts '\]' contained conceal cchar=⸥ nextgroup=texSubscripts | endif " New character! If set `g:tex_subscripts` in '.vimrc', include it.
   call s:SuperSub('_','\\beta','ᵦ')
   call s:SuperSub('_','\\rho','ᵨ')
   "call s:SuperSub('_','\\varphi','ᵩ')
   call s:SuperSub('_','\\psi','ᵩ') "'ᵩ' is named and appears '_\varphi' in the unicode book <https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts>, but seems like '_\psi' in terminals
   call s:SuperSub('_','\\gamma','ᵧ')
   call s:SuperSub('_','\\chi','ᵪ')
+  call s:SuperSub('_','\\in','∊')
   call s:SuperSub('_','\%(|\|\\vert\|\\mid\)','ˌ')
   call s:SuperSub('_','\\Vert','﮼')
   
