@@ -129,42 +129,42 @@ syn match texMathSymbol '\%(\\mathbb{\s*W\s*}\|\\bbW\>\)' contained conceal ccha
 syn match texMathSymbol '\%(\\mathbb{\s*X\s*}\|\\bbX\>\)' contained conceal cchar=𝕏
 syn match texMathSymbol '\%(\\mathbb{\s*Y\s*}\|\\bbY\>\)' contained conceal cchar=𝕐
 syn match texMathSymbol '\%(\\mathbb{\s*Z\s*}\|\\bbZ\>\)' contained conceal cchar=ℤ
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*a\s*}\|\\bbaa\>\)' contained conceal cchar=𝕒
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*b\s*}\|\\bbbb\>\)' contained conceal cchar=𝕓
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*c\s*}\|\\bbcc\>\)' contained conceal cchar=𝕔
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*d\s*}\|\\bbdd\>\)' contained conceal cchar=𝕕
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*e\s*}\|\\bbee\>\)' contained conceal cchar=𝕖
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*f\s*}\|\\bbff\>\)' contained conceal cchar=𝕗
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*g\s*}\|\\bbgg\>\)' contained conceal cchar=𝕘
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*h\s*}\|\\bbhh\>\)' contained conceal cchar=𝕙
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*i\s*}\|\\bbii\>\)' contained conceal cchar=𝕚
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*j\s*}\|\\bbjj\>\)' contained conceal cchar=𝕛
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*k\s*}\|\\bbkk\>\)' contained conceal cchar=𝕜
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*l\s*}\|\\bbll\>\)' contained conceal cchar=𝕝
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*m\s*}\|\\bbmm\>\)' contained conceal cchar=𝕞
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*n\s*}\|\\bbnn\>\)' contained conceal cchar=𝕟
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*o\s*}\|\\bboo\>\)' contained conceal cchar=𝕠
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*p\s*}\|\\bbpp\>\)' contained conceal cchar=𝕡
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*q\s*}\|\\bbqq\>\)' contained conceal cchar=𝕢
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*r\s*}\|\\bbrr\>\)' contained conceal cchar=𝕣
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*s\s*}\|\\bbss\>\)' contained conceal cchar=𝕤
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*t\s*}\|\\bbtt\>\)' contained conceal cchar=𝕥
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*u\s*}\|\\bbuu\>\)' contained conceal cchar=𝕦
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*v\s*}\|\\bbvv\>\)' contained conceal cchar=𝕧
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*w\s*}\|\\bbww\>\)' contained conceal cchar=𝕨
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*x\s*}\|\\bbxx\>\)' contained conceal cchar=𝕩
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*y\s*}\|\\bbyy\>\)' contained conceal cchar=𝕪
-"syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*z\s*}\|\\bbzz\>\)' contained conceal cchar=𝕫
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*0\s*}\|\\bbzro\>\)' contained conceal cchar=𝟘
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*1\s*}\|\\bbone\>\)' contained conceal cchar=𝟙
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*2\s*}\|\\bbtwo\>\)' contained conceal cchar=𝟚
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*3\s*}\|\\bbthr\>\)' contained conceal cchar=𝟛
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*4\s*}\|\\bbfor\>\)' contained conceal cchar=𝟜
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*5\s*}\|\\bbfiv\>\)' contained conceal cchar=𝟝
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*6\s*}\|\\bbsix\>\)' contained conceal cchar=𝟞
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*7\s*}\|\\bbsev\>\)' contained conceal cchar=𝟟
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*8\s*}\|\\bbeit\>\)' contained conceal cchar=𝟠
-syn match texMathSymbol '\%(\\mathbb[ml]\?{\s*9\s*}\|\\bbnin\>\)' contained conceal cchar=𝟡
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*a\s*}\|\\bbaa\>\)' contained conceal cchar=𝕒
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*b\s*}\|\\bbbb\>\)' contained conceal cchar=𝕓
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*c\s*}\|\\bbcc\>\)' contained conceal cchar=𝕔
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*d\s*}\|\\bbdd\>\)' contained conceal cchar=𝕕
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*e\s*}\|\\bbee\>\)' contained conceal cchar=𝕖
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*f\s*}\|\\bbff\>\)' contained conceal cchar=𝕗
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*g\s*}\|\\bbgg\>\)' contained conceal cchar=𝕘
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*h\s*}\|\\bbhh\>\)' contained conceal cchar=𝕙
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*i\s*}\|\\bbii\>\)' contained conceal cchar=𝕚
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*j\s*}\|\\bbjj\>\)' contained conceal cchar=𝕛
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*k\s*}\|\\bbkk\>\)' contained conceal cchar=𝕜
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*l\s*}\|\\bbll\>\)' contained conceal cchar=𝕝
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*m\s*}\|\\bbmm\>\)' contained conceal cchar=𝕞
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*n\s*}\|\\bbnn\>\)' contained conceal cchar=𝕟
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*o\s*}\|\\bboo\>\)' contained conceal cchar=𝕠
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*p\s*}\|\\bbpp\>\)' contained conceal cchar=𝕡
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*q\s*}\|\\bbqq\>\)' contained conceal cchar=𝕢
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*r\s*}\|\\bbrr\>\)' contained conceal cchar=𝕣
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*s\s*}\|\\bbss\>\)' contained conceal cchar=𝕤
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*t\s*}\|\\bbtt\>\)' contained conceal cchar=𝕥
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*u\s*}\|\\bbuu\>\)' contained conceal cchar=𝕦
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*v\s*}\|\\bbvv\>\)' contained conceal cchar=𝕧
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*w\s*}\|\\bbww\>\)' contained conceal cchar=𝕨
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*x\s*}\|\\bbxx\>\)' contained conceal cchar=𝕩
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*y\s*}\|\\bbyy\>\)' contained conceal cchar=𝕪
+"syn match texMathSymbol '\%(\\mathbb[ml]\={\s*z\s*}\|\\bbzz\>\)' contained conceal cchar=𝕫
+syn match texMathSymbol '\%(\\mathbb[ml]\={\s*0\s*}\|\\bbzro\>\)' contained conceal cchar=𝟘
+syn match texMathSymbol '\%(\\mathbb[ml]\={\s*1\s*}\|\\bbone\>\)' contained conceal cchar=𝟙
+syn match texMathSymbol '\%(\\mathbb[ml]\={\s*2\s*}\|\\bbtwo\>\)' contained conceal cchar=𝟚
+syn match texMathSymbol '\%(\\mathbb[ml]\={\s*3\s*}\|\\bbthr\>\)' contained conceal cchar=𝟛
+syn match texMathSymbol '\%(\\mathbb[ml]\={\s*4\s*}\|\\bbfor\>\)' contained conceal cchar=𝟜
+syn match texMathSymbol '\%(\\mathbb[ml]\={\s*5\s*}\|\\bbfiv\>\)' contained conceal cchar=𝟝
+syn match texMathSymbol '\%(\\mathbb[ml]\={\s*6\s*}\|\\bbsix\>\)' contained conceal cchar=𝟞
+syn match texMathSymbol '\%(\\mathbb[ml]\={\s*7\s*}\|\\bbsev\>\)' contained conceal cchar=𝟟
+syn match texMathSymbol '\%(\\mathbb[ml]\={\s*8\s*}\|\\bbeit\>\)' contained conceal cchar=𝟠
+syn match texMathSymbol '\%(\\mathbb[ml]\={\s*9\s*}\|\\bbnin\>\)' contained conceal cchar=𝟡
 
 " \mathsf characters
 syn match texMathSymbol '\%(\\mathsf{\s*A\s*}\|\\sfA\>\)' contained conceal cchar=𝖠
@@ -839,18 +839,18 @@ if s:tex_conceal =~# 'g'
   syn match texGreek '\\\%(bm{\s*\\chi\>\s*}\|bmchi\>\)' contained conceal cchar=𝝌
   syn match texGreek '\\\%(bm{\s*\\psi\>\s*}\|bmpsi\>\)' contained conceal cchar=𝝍
   syn match texGreek '\\\%(bm{\s*\\omega\>\s*}\|bmomega\>\)' contained conceal cchar=𝝎
-  syn match texGreek '\\\%(bm{\s*\\Gamma\>\s*}\|b[mi]\?Gamma\>\)' contained conceal cchar=𝜞
-  syn match texGreek '\\\%(bm{\s*\\Delta\>\s*}\|b[mi]\?Delta\>\)' contained conceal cchar=𝜟
-  syn match texGreek '\\\%(bm{\s*\\Theta\>\s*}\|b[mi]\?Theta\>\)' contained conceal cchar=𝜣
-  syn match texGreek '\\\%(bm{\s*\\Lambda\>\s*}\|b[mi]\?Lambda\>\)' contained conceal cchar=𝜦
-  syn match texGreek '\\\%(bm{\s*\\Xi\>\s*}\|b[mi]\?Xi\>\)' contained conceal cchar=𝜩
-  syn match texGreek '\\\%(bm{\s*\\Pi\>\s*}\|b[mi]\?Pi\>\)' contained conceal cchar=𝜫
-  syn match texGreek '\\\%(bm{\s*\\Sigma\>\s*}\|b[mi]\?Sigma\>\)' contained conceal cchar=𝜮
-  syn match texGreek '\\\%(bm{\s*\\Upsilon\>\s*}\|b[mi]\?Upsilon\>\)' contained conceal cchar=𝜰
-  syn match texGreek '\\\%(bm{\s*\\Phi\>\s*}\|b[mi]\?Phi\>\)' contained conceal cchar=𝜱
-  syn match texGreek '\\\%(bm{\s*\\Chi\>\s*}\|b[mi]\?Chi\>\)' contained conceal cchar=𝜲
-  syn match texGreek '\\\%(bm{\s*\\Psi\>\s*}\|b[mi]\?Psi\>\)' contained conceal cchar=𝜳
-  syn match texGreek '\\\%(bm{\s*\\Omega\>\s*}\|b[mi]\?Omega\>\)' contained conceal cchar=𝜴
+  syn match texGreek '\\\%(bm{\s*\\Gamma\>\s*}\|b[mi]\=Gamma\>\)' contained conceal cchar=𝜞
+  syn match texGreek '\\\%(bm{\s*\\Delta\>\s*}\|b[mi]\=Delta\>\)' contained conceal cchar=𝜟
+  syn match texGreek '\\\%(bm{\s*\\Theta\>\s*}\|b[mi]\=Theta\>\)' contained conceal cchar=𝜣
+  syn match texGreek '\\\%(bm{\s*\\Lambda\>\s*}\|b[mi]\=Lambda\>\)' contained conceal cchar=𝜦
+  syn match texGreek '\\\%(bm{\s*\\Xi\>\s*}\|b[mi]\=Xi\>\)' contained conceal cchar=𝜩
+  syn match texGreek '\\\%(bm{\s*\\Pi\>\s*}\|b[mi]\=Pi\>\)' contained conceal cchar=𝜫
+  syn match texGreek '\\\%(bm{\s*\\Sigma\>\s*}\|b[mi]\=Sigma\>\)' contained conceal cchar=𝜮
+  syn match texGreek '\\\%(bm{\s*\\Upsilon\>\s*}\|b[mi]\=Upsilon\>\)' contained conceal cchar=𝜰
+  syn match texGreek '\\\%(bm{\s*\\Phi\>\s*}\|b[mi]\=Phi\>\)' contained conceal cchar=𝜱
+  syn match texGreek '\\\%(bm{\s*\\Chi\>\s*}\|b[mi]\=Chi\>\)' contained conceal cchar=𝜲
+  syn match texGreek '\\\%(bm{\s*\\Psi\>\s*}\|b[mi]\=Psi\>\)' contained conceal cchar=𝜳
+  syn match texGreek '\\\%(bm{\s*\\Omega\>\s*}\|b[mi]\=Omega\>\)' contained conceal cchar=𝜴
 
   " Greek letters with accents
   syn match texGreek '\\alphab\>' contained conceal cchar=ᾱ
@@ -960,12 +960,12 @@ if s:tex_conceal =~# 's'
   
   if !exists("g:tex_superscriptSymbols")
     let s:tex_superscriptSymbols= ['\\alpha','\\beta','\\gamma','\\Gamma','\\delta','\\Delta','\\\%(veps\|varepsilon\)',
-	  "\ '\\eps\%(ilon\)\?',
+	  "\ '\\eps\%(ilon\)\=',
 	  \ '\\Lambda','\\theta','\\rho','\\sigma','\\iota','\\Phi','\\psi',
 	  "\ '\\varphi',
 	  \ '\\chi','\\omega',
-	  \ '\%(\*\|\\ast\|\\star\)','\\top','\\cdot','\\ne[q]\?',
-	  "\ '\\int','\%(|\|\\vert\|\\mid\)','\\Vert','\\perp','\\parallel','\\\%(big\)\?cap','\\\%(big\)\?cup','\\superset\%(eq\)\?',
+	  \ '\%(\*\|\\ast\|\\star\)','\\top','\\cdot','\\ne[q]\=',
+	  "\ '\\int','\%(|\|\\vert\|\\mid\)','\\Vert','\\perp','\\parallel','\\\%(big\)\=cap','\\\%(big\)\=cup','\\superset\%(eq\)\=',
     \ ]
   else
     let s:tex_superscriptSymbols= g:tex_superscriptSymbols
@@ -1091,7 +1091,7 @@ if s:tex_conceal =~# 's'
   call s:SuperSub('\^','\\delta','ᵟ')
   call s:SuperSub('\^','\\Delta','ᐞ')
   call s:SuperSub('\^','\\\%(veps\|varepsilon\)','ᵋ')
-  "call s:SuperSub('\^','\\eps\%(ilon\)\?','ᵋ') " Aggressive
+  "call s:SuperSub('\^','\\eps\%(ilon\)\=','ᵋ') " Aggressive
   call s:SuperSub('\^','\\Lambda','ᶺ')
   call s:SuperSub('\^','\\theta','ᶿ')
   call s:SuperSub('\^','\\rho','ᣖ')
@@ -1105,15 +1105,15 @@ if s:tex_conceal =~# 's'
   call s:SuperSub('\^','\%(\*\|\\ast\|\\star\)','˟')
   call s:SuperSub('\^','\\top','ᵀ')
   call s:SuperSub('\^','\\cdot','·')
-  call s:SuperSub('\^','\\ne[q]\?','ᙾ')
+  call s:SuperSub('\^','\\ne[q]\=','ᙾ')
   call s:SuperSub('\^','\\int','ᶴ')
   call s:SuperSub('\^','\%(|\|\\vert\|\\mid\)','ᑊ')
   call s:SuperSub('\^','\\Vert','ᐦ')
   call s:SuperSub('\^','\\perp','ᗮ')
   call s:SuperSub('\^','\\parallel','ᐥ')
-  call s:SuperSub('\^','\\\%(big\)\?cap','ᐢ')
-  call s:SuperSub('\^','\\\%(big\)\?cup','ᐡ')
-  call s:SuperSub('\^','\\superset\%(eq\)\?','ᐣ')
+  call s:SuperSub('\^','\\\%(big\)\=cap','ᐢ')
+  call s:SuperSub('\^','\\\%(big\)\=cup','ᐡ')
+  call s:SuperSub('\^','\\superset\%(eq\)\=','ᐣ')
   syn match texMathSymbol '\\trs\>' contained conceal cchar=ᵀ
   
   call s:SuperSub('_','0','₀')
@@ -1171,13 +1171,15 @@ if s:tex_conceal =~# 's'
 endif
 
 " New refs
-syn region texRefZone matchgroup=texStatement start="\\\(eqns\?\|secs\?\|chap\|figs\?\|tabs\?\|ftn\|thms\?\|props\?\|lems\?\|cors\?\|assms\?\|defs\?\|algs\?\|supp\)ref{"	end="}\|%stopzone\>"	contains=@texRefGroup
+syn region texRefZone matchgroup=texStatement start="\\\(eqns\=\|secs\=\|chap\|figs\=\|tabs\=\|ftn\|thms\=\|props\=\|lems\=\|cors\=\|assms\=\|defs\=\|algs\=\|supp\)ref{"	end="}\|%stopzone\>"	contains=@texRefGroup
 syn region texRefZone matchgroup=texStatement start="\\refeq"	end="}\|%stopzone\>"	contains=@texRefGroup
 
 let s:depth1brace= '{'.'[^{}]*}'
 let s:depth1or2brace= '{'.'\%('.'[^{}]*'.s:depth1brace.'\)*'.'[^{}]*}'
 let s:depth1or2or3brace= '{'.'\%('.'[^{}]*'.s:depth1or2brace.'\)*'.'[^{}]*}'
 if s:tex_fast =~# 'M'
+  let s:containedingroup= 'texSuperscript,texSubscript,texMathDelimlrparen,texMathDelimlrbrack,texMathDelimlrbrace,texMathDelimlrvert,texMathDelimCaplrVert,texMathDelimlrangle,texMathDelimlrceil,texMathDelimlrfloor,texMathDelimbra,texMathDelimket'
+  let s:containsgroup= 'texMathSymbol,texGreek,texMathOper,texMathDelim,texSpecialChar,texStatement,texMathMatcher,'.s:containedingroup
   if has("conceal") && &enc == 'utf-8' && s:tex_conceal =~# 'd'
 	""Plan 1
 	"syn region texZoneParen	matchgroup=texStatement start='\\lrparen{' cchar=( skip="\\\\\|\\[{}]" matchgroup=texStatement end='}\|%stopzone\>' cchar=) keepend concealends contains=texZoneParen,@texMathZoneGroup containedin=texMathZones
@@ -1187,8 +1189,8 @@ if s:tex_fast =~# 'M'
 	"Plan 2
     fun! s:DelimCmd(name, lcchar, rcchar, iscap)
 	  let l:subname= a:iscap ? 'texMathDelimCap'.a:name : 'texMathDelim'.a:name
-	  exe 'syn match '.l:subname.' ''\\'.a:name.'\*\='.s:depth1or2or3brace.''' transparent contained contains=texGreek,texMathSymbol,texMathOper,texMathDelim,texSpecialChar,texStatement,texMathMatcher,texSuperscript,texSubscript,'.l:subname.'s'.',texMathDelimlrparen,texMathDelimlrbrack,texMathDelimlrbrace,texMathDelimlrvert,texMathDelimCaplrVert,texMathDelimlrangle,texMathDelimlrceil,texMathDelimlrfloor,texMathDelimbra,texMathDelimket'
-	  exe 'syn match '.l:subname.'s ''\\'.a:name.'\*\={'' contained conceal cchar='.a:lcchar
+	  exe 'syn match '.l:subname.' ''\\'.a:name.'\*\=\%(\[\\\a\+\]\)\='.s:depth1or2or3brace.''' transparent contained contains='.s:containsgroup.','.l:subname.'s'
+	  exe 'syn match '.l:subname.'s ''\\'.a:name.'\*\=\%(\[\\\a\+\]\)\={'' contained conceal cchar='.a:lcchar
 	  " For matching only the last '}' char, '.*\zs}' does not work. `exe 'syn match '.l:subname.'s ''{\%([^{]*{[^{}]*}\)*[^{}]*\zs}\ze'' contained conceal cchar='.a:rcchar` does not work either. But it seems not needed.
 	  exe 'syn match '.l:subname.'s ''}'' contained conceal cchar='.a:rcchar
 	  exe 'syn cluster texMathZoneGroup          add='.l:subname
@@ -1209,25 +1211,54 @@ if s:tex_fast =~# 'M'
     delfun s:DelimCmd
   endif
 
-  fun! s:FracDiff(name, cchar)
-	let l:subname= 'texFrac'.a:name
-    exe 'syn match '.l:subname.' ''\\frac'.a:name.s:depth1or2brace.s:depth1or2brace.''' transparent contained contains=texGreek,texMathSymbol,texMathOper,texMathDelim,texSpecialChar,texStatement,texMathMatcher,texSuperscript,texSubscript,'.l:subname.'first,'.l:subname.'second'.',texMathDelimlrparen,texMathDelimlrbrack,texMathDelimlrbrace,texMathDelimlrvert,texMathDelimCaplrVert,texMathDelimlrangle,texMathDelimlrceil,texMathDelimlrfloor,texMathDelimbra,texMathDelimket'
-	  \ .' containedin=texSuperscript,texSubscript,texMathDelimlrparen,texMathDelimlrbrack,texMathDelimlrbrace,texMathDelimlrvert,texMathDelimCaplrVert,texMathDelimlrangle,texMathDelimlrceil,texMathDelimlrfloor,texMathDelimbra,texMathDelimket'
-	exe 'syn match '.l:subname.'first ''\\frac'.a:name.s:depth1or2brace.''' transparent contained contains='l:subname.'firsts'.',texGreek,texMathSymbol,texMathOper,texMathDelim,texSpecialChar,texStatement,texMathMatcher,texSuperscript,texSubscript,texMathDelimlrparen,texMathDelimlrbrack,texMathDelimlrbrace,texMathDelimlrvert,texMathDelimCaplrVert,texMathDelimlrangle,texMathDelimlrceil,texMathDelimlrfloor,texMathDelimbra,texMathDelimket'
-	exe 'syn match '.l:subname.'firsts ''\\frac'.a:name.'{'' contained conceal cchar='.a:cchar.' nextgroup='.l:subname.'firsts'
-	exe 'syn match '.l:subname.'firsts ''}'' contained conceal cchar=/ nextgroup='.l:subname.'second'
-	exe 'syn match '.l:subname.'second '''.s:depth1or2brace.''' transparent contained contains='l:subname.'seconds'.',texGreek,texMathSymbol,texMathOper,texMathDelim,texSpecialChar,texStatement,texMathMatcher,texSuperscript,texSubscript,texMathDelimlrparen,texMathDelimlrbrack,texMathDelimlrbrace,texMathDelimlrvert,texMathDelimCaplrVert,texMathDelimlrangle,texMathDelimlrceil,texMathDelimlrfloor,texMathDelimbra,texMathDelimket'
-	exe 'syn match '.l:subname.'seconds ''{'' contained conceal cchar='.a:cchar.' nextgroup='.l:subname.'seconds'
-	exe 'syn match '.l:subname.'seconds ''}'' contained conceal'
+  fun! s:FracDiff(name, cchar, iscap)
+	let l:subname= a:iscap? 'texFracCap'.a:name : 'texFrac'.a:name
+    exe 'syn match '.l:subname.' ''\\frac'.a:name.s:depth1or2brace.s:depth1or2brace.''' transparent contained contains='.s:containsgroup.','.l:subname.'1,'.l:subname.'2'
+	  \ .' containedin='.s:containedingroup
+	exe 'syn match '.l:subname.'1 ''\\frac'.a:name.s:depth1or2brace.''' transparent contained contains='.s:containsgroup.','.l:subname.'1s'
+	exe 'syn match '.l:subname.'1s ''\\frac'.a:name.'{'' contained conceal cchar='.a:cchar.' nextgroup='.l:subname.'1s'
+	exe 'syn match '.l:subname.'1s ''}'' contained conceal cchar=/ nextgroup='.l:subname.'2'
+	exe 'syn match '.l:subname.'2 '''.s:depth1or2brace.''' transparent contained contains='.s:containsgroup.','.l:subname.'2s'
+	exe 'syn match '.l:subname.'2s ''{'' contained conceal cchar='.a:cchar.' nextgroup='.l:subname.'2s'
+	exe 'syn match '.l:subname.'2s ''}'' contained conceal'
     exe 'syn cluster texMathZoneGroup          add='.l:subname
     exe 'syn cluster texMathMatchGroup         add='.l:subname
-    exe 'hi def link '.l:subname.'firsts texStatement'
-    exe 'hi def link '.l:subname.'seconds texStatement'
+    exe 'hi def link '.l:subname.'1s texStatement'
+    exe 'hi def link '.l:subname.'2s texStatement'
   endfun
-  call s:FracDiff('diff','𝚍')
-  call s:FracDiff('partial','∂')
-  call s:FracDiff('delta','δ')
-  call s:FracDiff('Delta','Δ')
+  call s:FracDiff('diff','𝚍',0)
+  call s:FracDiff('partial','∂',0)
+  call s:FracDiff('delta','δ',0)
+  call s:FracDiff('Delta','Δ',1)
   delfun s:FracDiff
+
+  exe 'syn match texBraKet ''\\braket\*\=\%(\[\\\a\+\]\)\='.s:depth1or2brace.s:depth1or2brace.''' transparent contained contains='.s:containsgroup.',texBraKet1'
+	  \ .' containedin='.s:containedingroup
+  " Plan 1
+  syn match texBraKet1 '\\braket\*\=\%(\[\\\a\+\]\)\={' contained conceal cchar=⟨ nextgroup=texBraKet1
+  syn match texBraKet1 '}' contained conceal cchar=⟩
+  syn match texBraKet1 '}{' contained conceal cchar=| nextgroup=texBraKet1
+  exe 'hi def link texBraKet1 texStatement'
+  " " Plan 2 (add ',texBraKet2' to the first line)
+  " exe 'syn match texBraKet1 ''\\braket\*\=\%(\[\\\a\+\]\)\='.s:depth1or2brace.''' transparent contained contains='.s:containsgroup.',texBraKet1s'
+  " exe 'syn match texBraKet1s ''\\braket\*\=\%(\[\\\a\+\]\)\={'' contained conceal cchar=⟨ nextgroup=texBraKet1s'
+  " exe 'syn match texBraKet1s ''}'' contained conceal nextgroup=texBraKet2'
+  " exe 'syn match texBraKet2 '''.s:depth1or2brace.''' transparent contained contains='.s:containsgroup.',texBraKet2s'
+  " exe 'syn match texBraKet2s ''{'' contained conceal cchar=| nextgroup=texBraKet2s'
+  " exe 'syn match texBraKet2s ''}'' contained conceal cchar=⟩'
+  " exe 'hi def link texBraKet1s texStatement'
+  " exe 'hi def link texBraKet2s texStatement'
+  " " End
+  exe 'syn cluster texMathZoneGroup          add=texBraKet'
+  exe 'syn cluster texMathMatchGroup         add=texBraKet'
+
+  exe 'syn match texOBraKet ''\\obraket\*\=\%(\[\\\a\+\]\)\='.s:depth1or2brace.s:depth1or2brace.s:depth1or2brace.''' transparent contained contains='.s:containsgroup.',texOBraKet1'
+	  \ .' containedin='.s:containedingroup
+  syn match texOBraKet1 '\\obraket\*\=\%(\[\\\a\+\]\)\={' contained conceal cchar=⟨ nextgroup=texOBraKet1
+  syn match texOBraKet1 '}' contained conceal cchar=⟩
+  syn match texOBraKet1 '}{' contained conceal cchar=| nextgroup=texOBraKet1
+  exe 'hi def link texOBraKet1 texStatement'
+  exe 'syn cluster texMathZoneGroup          add=texOBraKet'
+  exe 'syn cluster texMathMatchGroup         add=texOBraKet'
 endif
 
