@@ -1146,32 +1146,39 @@ endif
 syn region texRefZone matchgroup=texStatement start="\\\(eqns\?\|secs\?\|chap\|figs\?\|tabs\?\|ftn\|thms\?\|props\?\|lems\?\|cors\?\|assms\?\|defs\?\|algs\?\|supp\)ref{"	end="}\|%stopzone\>"	contains=@texRefGroup
 syn region texRefZone matchgroup=texStatement start="\\refeq"	end="}\|%stopzone\>"	contains=@texRefGroup
 
-" if s:tex_fast =~# 'M'
-"   if has("conceal") && &enc == 'utf-8' && s:tex_conceal =~# 'd'
-"     "syn region texMathZoneV	matchgroup=texDelimiter start='\\lrparen{'			matchgroup=texDelimiter	end='}\|%stopzone\>'			keepend concealends contains=@texMathZoneGroup
-"     fun! s:DelimCmd(name, lcchar, rcchar)
-" 	  let l:subname= "texMathDelim".a:name
-" 	  exe "syn match ".l:subname." '".'\\lr'.a:name.'\*\={[^{]\{-}}'."' contained contains=texSpecialChar,texStatement,texMathMatcher,".l:subname."s"
-" 	  exe "syn match ".l:subname."s '".'\\lr'.a:name.'\*\={'."' contained conceal cchar=".a:lcchar
-" 	  exe "syn match ".l:subname."s '".'}'."' contained conceal cchar=".a:rcchar
-" 	  exe "syn cluster texMathZoneGroup          add=".l:subname
-" 	  exe "syn cluster texMathMatchGroup         add=".l:subname
-" 	  "hi def link texMathParen texMath
-" 	  "hi def link texMathParenDelim texMathDelim
-" 	  exe "hi def link ".l:subname." texStatement"
-" 	  exe "hi def link ".l:subname."s texStatement"
-"     endfun
-" 	call s:DelimCmd('paren','(',')')
-" 	call s:DelimCmd('brack','[',']')
-" 	call s:DelimCmd('brace','{','}')
-" 	call s:DelimCmd('vert','|','|')
-" 	call s:DelimCmd('Vert','‖','‖')
-" 	call s:DelimCmd('angle','⟨','⟩')
-" 	call s:DelimCmd('ceil','⌈','⌉')
-" 	call s:DelimCmd('floor','⌊','⌋')
-" 	call s:DelimCmd('bra','|','⟩')
-" 	call s:DelimCmd('ket','⟨','|')
-"     delfun s:DelimCmd
-"   endif
-" endif
+if s:tex_fast =~# 'M'
+  if has("conceal") && &enc == 'utf-8' && s:tex_conceal =~# 'd'
+    let s:depth1brace= '{'.'[^{}]*}'
+	let s:depth1or2brace= '{'.'\%('.'[^{}]*'.s:depth1brace.'\)*'.'[^{}]*}'
+	let s:depth1or2or3brace= '{'.'\%('.'[^{}]*'.s:depth1or2brace.'\)*'.'[^{}]*}'
+	""Plan 1
+	"syn region texZoneParen	matchgroup=texStatement start='\\lrparen{' cchar=( skip="\\\\\|\\[{}]" matchgroup=texStatement end='}\|%stopzone\>' cchar=) keepend concealends contains=texZoneParen,@texMathZoneGroup containedin=texMathZones
+	"syn cluster texMathZones		add=texZoneParen
+    "syn cluster texMathZoneGroup          add=texZoneParen
+    "hi def link texZoneParen	texMath
+	"Plan 2
+    fun! s:DelimCmd(name, lcchar, rcchar, iscap)
+	  let l:subname= a:iscap ? 'texMathDelimCap'.a:name : 'texMathDelim'.a:name
+	  exe 'syn match '.l:subname.' ''\\'.a:name.'\*\='.s:depth1or2or3brace.''' transparent contained contains=texGreek,texMathSymbol,texMathOper,texMathDelim,texSpecialChar,texStatement,texMathMatcher,texSuperscript,texSubscript,'.l:subname.'s'.',texMathDelimlrparen,texMathDelimlrbrack,texMathDelimlrbrace,texMathDelimlrvert,texMathDelimCaplrVert,texMathDelimlrangle,texMathDelimlrceil,texMathDelimlrfloor,texMathDelimbra,texMathDelimket'
+	  exe 'syn match '.l:subname.'s ''\\'.a:name.'\*\={'' contained conceal cchar='.a:lcchar
+	  " For matching only the last '}' char, '.*\zs}' does not work. `exe 'syn match '.l:subname.'s ''{\%([^{]*{[^{}]*}\)*[^{}]*\zs}\ze'' contained conceal cchar='.a:rcchar` does not work either. But it seems not needed.
+	  exe 'syn match '.l:subname.'s ''}'' contained conceal cchar='.a:rcchar
+	  exe 'syn cluster texMathZoneGroup          add='.l:subname
+	  exe 'syn cluster texMathMatchGroup         add='.l:subname
+	  "exe 'hi def link '.l:subname.' texMath'
+	  exe 'hi def link '.l:subname.'s texStatement'
+    endfun
+	call s:DelimCmd('lrparen','(',')',0)
+	call s:DelimCmd('lrbrack','[',']',0)
+	call s:DelimCmd('lrbrace','{','}',0)
+	call s:DelimCmd('lrvert','|','|',0)
+	call s:DelimCmd('lrVert','‖','‖',1)
+	call s:DelimCmd('lrangle','⟨','⟩',0)
+	call s:DelimCmd('lrceil','⌈','⌉',0)
+	call s:DelimCmd('lrfloor','⌊','⌋',0)
+	call s:DelimCmd('bra','⟨','|',0)
+	call s:DelimCmd('ket','|','⟩',0)
+    delfun s:DelimCmd
+  endif
+endif
 
