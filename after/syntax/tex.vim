@@ -87,6 +87,8 @@ endif
 syn match texMathSymbol '\\langle\>\s*' contained conceal cchar=⟨
 syn match texMathSymbol '\s*\\rangle\>' contained conceal cchar=⟩
 syn match texMathSymbol '\\\\' contained conceal cchar=⏎
+syn match texMathSymbol '\\nolimits' contained conceal
+syn match texMathSymbol '\\asn\>' contained conceal cchar=←
 
 " logical symbols
 syn match texMathSymbol '\\longleftarrow\>' contained conceal cchar=←
@@ -964,8 +966,8 @@ if s:tex_conceal =~# 's'
 	  \ '\\Lambda','\\theta','\\rho','\\sigma','\\iota','\\Phi','\\psi',
 	  "\ '\\varphi',
 	  \ '\\chi','\\omega',
-	  \ '\%(\*\|\\ast\|\\star\)','\\top','\\dagger','\\times','\\cdot\>','\\l\=dot\>','\\[cl]\=dots','\\neq\=',
-	  "\ '\\int','\%(|\|\\vert\|\\mid\)','\\Vert','\\perp','\\parallel','\\\%(big\)\=cap','\\\%(big\)\=cup','\\superset\%(eq\)\=',
+	  \ '\%(\*\|\\ast\|\\star\)','\\top','\\dagger','\\times','\\cdot\>','\\l\=dot\>','\\[cl]\=dots','\\neq\=','\%(|\|\\vert\|\\mid\)','\\Vert',
+	  "\ '\\perp','\\parallel','\\int','\\\%(big\)\=cap','\\\%(big\)\=cup','\\superset\%(eq\)\=',
     \ ]
   else
     let s:tex_superscriptSymbols= g:tex_superscriptSymbols
@@ -975,7 +977,7 @@ if s:tex_conceal =~# 's'
 	  "\ '\\varphi',
 	  \ '\\gamma','\\chi',
 	  \ '\\in','\\times','\\cdot\>','\\l\=dot\>','\\[cl]\=dots',
-	  "\ '\%(|\|\\vert\|\\mid\)','\\Vert',
+	  \ '\%(|\|\\vert\|\\mid\)','\\Vert',
     \ ]
   else
     let s:tex_subscriptSymbols= g:tex_subscriptSymbols
@@ -1110,11 +1112,11 @@ if s:tex_conceal =~# 's'
   call s:SuperSub('\^','\\l\=dot\>','˙')
   call s:SuperSub('\^','\\[cl]\=dots','⋯')
   call s:SuperSub('\^','\\ne[q]\=','ᙾ')
-  call s:SuperSub('\^','\\int','ᶴ')
   call s:SuperSub('\^','\%(|\|\\vert\|\\mid\)','ᑊ')
   call s:SuperSub('\^','\\Vert','ᐦ')
   call s:SuperSub('\^','\\perp','ᗮ')
   call s:SuperSub('\^','\\parallel','ᐥ')
+  call s:SuperSub('\^','\\int','ᶴ')
   call s:SuperSub('\^','\\\%(big\)\=cap','ᐢ')
   call s:SuperSub('\^','\\\%(big\)\=cup','ᐡ')
   call s:SuperSub('\^','\\superset\%(eq\)\=','ᐣ')
