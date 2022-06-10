@@ -885,8 +885,8 @@ syn match texMathSymbol '\\bm\%({\s*\\partial\>\s*}\|partial\>\)' contained conc
 " Other symbols
 syn match texSpecialChar '\\#' contained conceal cchar=#
 
-syn match texStatement '``' contained conceal cchar=“
-syn match texStatement '\'\'' contained conceal cchar=”
+syn match texString '``' contained conceal cchar=“
+syn match texString '\'\'' contained conceal cchar=”
 syn match texStatement '\\item\>' contained conceal cchar=•
 "syn match texStatement '\\\[' contained conceal cchar=⟦
 "syn match texStatement '\\\]' contained conceal cchar=⟧
@@ -961,23 +961,23 @@ if s:tex_conceal =~# 's'
   endif
   
   if !exists("g:tex_superscriptSymbols")
-    let s:tex_superscriptSymbols= ['\\alpha','\\beta','\\gamma','\\Gamma','\\delta','\\Delta','\\\%(veps\|varepsilon\)',
-	  "\ '\\eps\%(ilon\)\=',
-	  \ '\\Lambda','\\theta','\\rho','\\sigma','\\iota','\\Phi','\\psi',
-	  "\ '\\varphi',
-	  \ '\\chi','\\omega',
-	  \ '\%(\*\|\\ast\|\\star\)','\\top','\\dagger','\\times','\\cdot\>','\\l\=dot\>','\\[cl]\=dots','\\neq\=','\%(|\|\\vert\|\\mid\)','\\Vert',
-	  "\ '\\perp','\\parallel','\\int','\\\%(big\)\=cap','\\\%(big\)\=cup','\\superset\%(eq\)\=',
+    let s:tex_superscriptSymbols= ['\\alpha\>','\\beta\>','\\gamma\>','\\Gamma\>','\\delta\>','\\Delta\>','\\\%(veps\|varepsilon\)\>',
+	  "\ '\\eps\%(ilon\)\=\>',
+	  \ '\\Lambda\>','\\theta\>','\\rho\>','\\sigma\>','\\iota\>','\\Phi\>','\\psi\>',
+	  "\ '\\varphi\>',
+	  \ '\\chi\>','\\omega\>',
+	  \ '\%(\*\|\\ast\|\\star\)\>','\\top\>','\\dagger\>','\\times\>','\\cdot\>','\\l\=dot\>','\\[cl]\=dots\>','\\neq\=\>','\%(|\|\\vert\|\\mid\)\>','\\Vert\>',
+	  "\ '\\perp\>','\\parallel\>','\\int\>','\\\%(big\)\=cap\>','\\\%(big\)\=cup\>','\\superset\%(eq\)\=\>',
     \ ]
   else
     let s:tex_superscriptSymbols= g:tex_superscriptSymbols
   endif
   if !exists("g:tex_subscriptSymbols")
-    let s:tex_subscriptSymbols= ['\\beta','\\rho','\\psi',
-	  "\ '\\varphi',
-	  \ '\\gamma','\\chi',
-	  \ '\\in','\\times','\\cdot\>','\\l\=dot\>','\\[cl]\=dots',
-	  \ '\%(|\|\\vert\|\\mid\)','\\Vert',
+    let s:tex_subscriptSymbols= ['\\beta\>','\\rho\>','\\psi\>',
+	  "\ '\\varphi\>',
+	  \ '\\gamma\>','\\chi\>',
+	  \ '\\in\>','\\times\>','\\cdot\>','\\l\=dot\>','\\[cl]\=dots\>',
+	  \ '\%(|\|\\vert\|\\mid\)\>','\\Vert\>',
     \ ]
   else
     let s:tex_subscriptSymbols= g:tex_subscriptSymbols
@@ -1086,40 +1086,40 @@ if s:tex_conceal =~# 's'
   if "'" =~# s:tex_superscripts | syn match texSuperscripts "'" contained conceal cchar=ˊ nextgroup=texSuperscripts | endif " New character! If set `g:tex_superscripts` in '.vimrc', include it.
   if '\[' =~# s:tex_superscripts | syn match texSuperscripts '\[' contained conceal cchar=⸢ nextgroup=texSuperscripts | endif " New character! If set `g:tex_superscripts` in '.vimrc', include it.
   if '\]' =~# s:tex_superscripts | syn match texSuperscripts '\]' contained conceal cchar=⸣ nextgroup=texSuperscripts | endif " New character! If set `g:tex_superscripts` in '.vimrc', include it.
-  call s:SuperSub('\^','\\alpha','ᵅ')
-  call s:SuperSub('\^','\\beta','ᵝ')
-  call s:SuperSub('\^','\\gamma','ᵞ')
-  call s:SuperSub('\^','\\Gamma','ᣘ')
-  call s:SuperSub('\^','\\delta','ᵟ')
-  call s:SuperSub('\^','\\Delta','ᐞ')
-  call s:SuperSub('\^','\\\%(veps\|varepsilon\)','ᵋ')
-  "call s:SuperSub('\^','\\eps\%(ilon\)\=','ᵋ') " Aggressive
-  call s:SuperSub('\^','\\Lambda','ᶺ')
-  call s:SuperSub('\^','\\theta','ᶿ')
-  call s:SuperSub('\^','\\rho','ᣖ')
-  call s:SuperSub('\^','\\sigma','ᣙ')
-  call s:SuperSub('\^','\\iota','ᶥ')
-  call s:SuperSub('\^','\\Phi','ᶲ')
-  "call s:SuperSub('\^','\\varphi','ᵠ')
-  call s:SuperSub('\^','\\psi','ᵠ') "'ᵠ' is named and appears '^\varphi' in the unicode book <https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts>, but seems like '^\psi' in terminals
-  call s:SuperSub('\^','\\chi','ᵡ')
-  call s:SuperSub('\^','\\omega','ᐜ')
-  call s:SuperSub('\^','\%(\*\|\\ast\|\\star\)','˟')
-  call s:SuperSub('\^','\\top','ᵀ')
-  call s:SuperSub('\^','\\dagger','†')
-  call s:SuperSub('\^','\\times','ˣ')
+  call s:SuperSub('\^','\\alpha\>','ᵅ')
+  call s:SuperSub('\^','\\beta\>','ᵝ')
+  call s:SuperSub('\^','\\gamma\>','ᵞ')
+  call s:SuperSub('\^','\\Gamma\>','ᣘ')
+  call s:SuperSub('\^','\\delta\>','ᵟ')
+  call s:SuperSub('\^','\\Delta\>','ᐞ')
+  call s:SuperSub('\^','\\\%(veps\|varepsilon\)\>','ᵋ')
+  "call s:SuperSub('\^','\\eps\%(ilon\)\=\>','ᵋ') " Aggressive
+  call s:SuperSub('\^','\\Lambda\>','ᶺ')
+  call s:SuperSub('\^','\\theta\>','ᶿ')
+  call s:SuperSub('\^','\\rho\>','ᣖ')
+  call s:SuperSub('\^','\\sigma\>','ᣙ')
+  call s:SuperSub('\^','\\iota\>','ᶥ')
+  call s:SuperSub('\^','\\Phi\>','ᶲ')
+  "call s:SuperSub('\^','\\varphi\>','ᵠ')
+  call s:SuperSub('\^','\\psi\>','ᵠ') "'ᵠ' is named and appears '^\varphi' in the unicode book <https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts>, but seems like '^\psi' in terminals
+  call s:SuperSub('\^','\\chi\>','ᵡ')
+  call s:SuperSub('\^','\\omega\>','ᐜ')
+  call s:SuperSub('\^','\%(\*\|\\ast\|\\star\)\>','˟')
+  call s:SuperSub('\^','\\top\>','ᵀ')
+  call s:SuperSub('\^','\\dagger\>','†')
+  call s:SuperSub('\^','\\times\>','ˣ')
   call s:SuperSub('\^','\\cdot\>','·')
   call s:SuperSub('\^','\\l\=dot\>','˙')
-  call s:SuperSub('\^','\\[cl]\=dots','⋯')
-  call s:SuperSub('\^','\\ne[q]\=','ᙾ')
-  call s:SuperSub('\^','\%(|\|\\vert\|\\mid\)','ᑊ')
-  call s:SuperSub('\^','\\Vert','ᐦ')
-  call s:SuperSub('\^','\\perp','ᗮ')
-  call s:SuperSub('\^','\\parallel','ᐥ')
-  call s:SuperSub('\^','\\int','ᶴ')
-  call s:SuperSub('\^','\\\%(big\)\=cap','ᐢ')
-  call s:SuperSub('\^','\\\%(big\)\=cup','ᐡ')
-  call s:SuperSub('\^','\\superset\%(eq\)\=','ᐣ')
+  call s:SuperSub('\^','\\[cl]\=dots\>','⋯')
+  call s:SuperSub('\^','\\ne[q]\=\>','ᙾ')
+  call s:SuperSub('\^','\%(|\|\\vert\|\\mid\)\>','ᑊ')
+  call s:SuperSub('\^','\\Vert\>','ᐦ')
+  call s:SuperSub('\^','\\perp\>','ᗮ')
+  call s:SuperSub('\^','\\parallel\>','ᐥ')
+  call s:SuperSub('\^','\\int\>','ᶴ')
+  call s:SuperSub('\^','\\\%(big\)\=cap\>','ᐢ')
+  call s:SuperSub('\^','\\\%(big\)\=cup\>','ᐡ')
+  call s:SuperSub('\^','\\superset\%(eq\)\=\>','ᐣ')
   syn match texMathSymbol '\\trs\>' contained conceal cchar=ᵀ
   
   call s:SuperSub('_','0','₀')
@@ -1163,19 +1163,19 @@ if s:tex_conceal =~# 's'
   if "'" =~# s:tex_subscripts | syn match texSubscripts "'" contained conceal cchar=˒ nextgroup=texSubscripts | endif " New character! If set `g:tex_subscripts` in '.vimrc', include it.
   if '\[' =~# s:tex_subscripts | syn match texSubscripts '\[' contained conceal cchar=⸤ nextgroup=texSubscripts | endif " New character! If set `g:tex_subscripts` in '.vimrc', include it.
   if '\]' =~# s:tex_subscripts | syn match texSubscripts '\]' contained conceal cchar=⸥ nextgroup=texSubscripts | endif " New character! If set `g:tex_subscripts` in '.vimrc', include it.
-  call s:SuperSub('_','\\beta','ᵦ')
-  call s:SuperSub('_','\\rho','ᵨ')
-  "call s:SuperSub('_','\\varphi','ᵩ')
-  call s:SuperSub('_','\\psi','ᵩ') "'ᵩ' is named and appears '_\varphi' in the unicode book <https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts>, but seems like '_\psi' in terminals
-  call s:SuperSub('_','\\gamma','ᵧ')
-  call s:SuperSub('_','\\chi','ᵪ')
-  call s:SuperSub('_','\\in','∊')
-  call s:SuperSub('_','\\times','༝')
+  call s:SuperSub('_','\\beta\>','ᵦ')
+  call s:SuperSub('_','\\rho\>','ᵨ')
+  "call s:SuperSub('_','\\varphi\>','ᵩ')
+  call s:SuperSub('_','\\psi\>','ᵩ') "'ᵩ' is named and appears '_\varphi' in the unicode book <https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts>, but seems like '_\psi' in terminals
+  call s:SuperSub('_','\\gamma\>','ᵧ')
+  call s:SuperSub('_','\\chi\>','ᵪ')
+  call s:SuperSub('_','\\in\>','∊')
+  call s:SuperSub('_','\\times\>','༝')
   call s:SuperSub('_','\\cdot\>','․')
   call s:SuperSub('_','\\l\=dot\>','‸')
-  call s:SuperSub('_','\\[cl]\=dots','…')
-  call s:SuperSub('_','\%(|\|\\vert\|\\mid\)','ˌ')
-  call s:SuperSub('_','\\Vert','﮼')
+  call s:SuperSub('_','\\[cl]\=dots\>','…')
+  call s:SuperSub('_','\%(|\|\\vert\|\\mid\)\>','ˌ')
+  call s:SuperSub('_','\\Vert\>','﮼')
   
   delfun s:SuperSub
 endif
