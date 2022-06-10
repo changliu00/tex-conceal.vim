@@ -966,7 +966,7 @@ if s:tex_conceal =~# 's'
 	  \ '\\Lambda\>','\\theta\>','\\rho\>','\\sigma\>','\\iota\>','\\Phi\>','\\psi\>',
 	  "\ '\\varphi\>',
 	  \ '\\chi\>','\\omega\>',
-	  \ '\%(\*\|\\ast\|\\star\)\>','\\top\>','\\dagger\>','\\times\>','\\cdot\>','\\l\=dot\>','\\[cl]\=dots\>','\\neq\=\>','\%(|\|\\vert\|\\mid\)\>','\\Vert\>',
+	  \ '\%(\*\|\\ast\>\|\\star\>\)','\\top\>','\\dagger\>','\\times\>','\\cdot\>','\\l\=dot\>','\\[cl]\=dots\>','\\neq\=\>','\%(|\|\\vert\|\\mid\)\>','\\Vert\>',
 	  "\ '\\perp\>','\\parallel\>','\\int\>','\\\%(big\)\=cap\>','\\\%(big\)\=cup\>','\\superset\%(eq\)\=\>',
     \ ]
   else
@@ -1104,7 +1104,7 @@ if s:tex_conceal =~# 's'
   call s:SuperSub('\^','\\psi\>','ᵠ') "'ᵠ' is named and appears '^\varphi' in the unicode book <https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts>, but seems like '^\psi' in terminals
   call s:SuperSub('\^','\\chi\>','ᵡ')
   call s:SuperSub('\^','\\omega\>','ᐜ')
-  call s:SuperSub('\^','\%(\*\|\\ast\|\\star\)\>','˟')
+  call s:SuperSub('\^','\%(\*\|\\ast\>\|\\star\>\)','˟')
   call s:SuperSub('\^','\\top\>','ᵀ')
   call s:SuperSub('\^','\\dagger\>','†')
   call s:SuperSub('\^','\\times\>','ˣ')
