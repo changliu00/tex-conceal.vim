@@ -107,6 +107,65 @@ syn match texMathSymbol '\\implies\>' contained conceal cchar=⇒
 syn match texMathSymbol '\\geqslant\>' contained conceal cchar=⩾
 syn match texMathSymbol '\\leqslant\>' contained conceal cchar=⩽
 
+" ordinal item symbols
+syn match texStatement '\\itemi\>' contained conceal cchar=ⅰ
+syn match texStatement '\\itemii\>' contained conceal cchar=ⅱ
+syn match texStatement '\\itemiii\>' contained conceal cchar=ⅲ
+syn match texStatement '\\itemiv\>' contained conceal cchar=ⅳ
+syn match texStatement '\\itemv\>' contained conceal cchar=ⅴ
+syn match texStatement '\\itemvi\>' contained conceal cchar=ⅵ
+syn match texStatement '\\itemvii\>' contained conceal cchar=ⅶ
+syn match texStatement '\\itemviii\>' contained conceal cchar=ⅷ
+syn match texStatement '\\itemix\>' contained conceal cchar=ⅸ
+syn match texStatement '\\itemx\>' contained conceal cchar=ⅹ
+
+syn match texStatement '\\itemI\>' contained conceal cchar=Ⅰ
+syn match texStatement '\\itemII\>' contained conceal cchar=Ⅱ
+syn match texStatement '\\itemIII\>' contained conceal cchar=Ⅲ
+syn match texStatement '\\itemIV\>' contained conceal cchar=Ⅳ
+syn match texStatement '\\itemV\>' contained conceal cchar=Ⅴ
+syn match texStatement '\\itemVI\>' contained conceal cchar=Ⅵ
+syn match texStatement '\\itemVII\>' contained conceal cchar=Ⅶ
+syn match texStatement '\\itemVIII\>' contained conceal cchar=Ⅷ
+syn match texStatement '\\itemIX\>' contained conceal cchar=Ⅸ
+syn match texStatement '\\itemX\>' contained conceal cchar=Ⅹ
+
+syn match texStatement '\\itemzro\>' contained conceal cchar=⓪
+syn match texStatement '\\itemone\>' contained conceal cchar=⑴
+syn match texStatement '\\itemtwo\>' contained conceal cchar=⑵
+syn match texStatement '\\itemthr\>' contained conceal cchar=⑶
+syn match texStatement '\\itemfor\>' contained conceal cchar=⑷
+syn match texStatement '\\itemfiv\>' contained conceal cchar=⑸
+syn match texStatement '\\itemsix\>' contained conceal cchar=⑹
+syn match texStatement '\\itemsev\>' contained conceal cchar=⑺
+syn match texStatement '\\itemeit\>' contained conceal cchar=⑻
+syn match texStatement '\\itemnin\>' contained conceal cchar=⑼
+syn match texStatement '\\itemten\>' contained conceal cchar=⑽
+
+syn match texStatement '\\itema\>' contained conceal cchar=⒜
+syn match texStatement '\\itemb\>' contained conceal cchar=⒝
+syn match texStatement '\\itemc\>' contained conceal cchar=⒞
+syn match texStatement '\\itemd\>' contained conceal cchar=⒟
+syn match texStatement '\\iteme\>' contained conceal cchar=⒠
+syn match texStatement '\\itemf\>' contained conceal cchar=⒡
+syn match texStatement '\\itemg\>' contained conceal cchar=⒢
+syn match texStatement '\\itemh\>' contained conceal cchar=⒣
+syn match texStatement '\\itemj\>' contained conceal cchar=⒥
+syn match texStatement '\\itemk\>' contained conceal cchar=⒦
+syn match texStatement '\\iteml\>' contained conceal cchar=⒧
+syn match texStatement '\\itemm\>' contained conceal cchar=⒨
+syn match texStatement '\\itemn\>' contained conceal cchar=⒩
+syn match texStatement '\\itemo\>' contained conceal cchar=⒪
+syn match texStatement '\\itemp\>' contained conceal cchar=⒫
+syn match texStatement '\\itemq\>' contained conceal cchar=⒬
+syn match texStatement '\\itemr\>' contained conceal cchar=⒭
+syn match texStatement '\\items\>' contained conceal cchar=⒮
+syn match texStatement '\\itemt\>' contained conceal cchar=⒯
+syn match texStatement '\\itemu\>' contained conceal cchar=⒰
+syn match texStatement '\\itemw\>' contained conceal cchar=⒲
+syn match texStatement '\\itemy\>' contained conceal cchar=⒴
+syn match texStatement '\\itemz\>' contained conceal cchar=⒵
+
 " \mathbb characters
 syn match texMathSymbol '\%(\\mathbb{\s*A\s*}\|\\bbA\>\)' contained conceal cchar=𝔸
 syn match texMathSymbol '\%(\\mathbb{\s*B\s*}\|\\bbB\>\)' contained conceal cchar=𝔹
