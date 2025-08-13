@@ -595,7 +595,7 @@ syn match texMathSymbol '\%(\\mathrm{\s*a\s*}\|\\rmaa\>\)' contained conceal cch
 syn match texMathSymbol '\%(\\mathrm{\s*b\s*}\|\\rmbb\>\)' contained conceal cchar=𝚋
 syn match texMathSymbol '\%(\\mathrm{\s*c\s*}\|\\rmcc\>\)' contained conceal cchar=𝚌
 syn match texMathSymbol '\%(\\mathrm{\s*d\s*}\|\\rmdd\>\|\\ud\>\|\\dd\>\)' contained conceal cchar=𝚍
-syn match texMathSymbol '\%(\\mathrm{\s*e\s*}\|\\rmee\>\|\\ue\>\)' contained conceal cchar=𝚎
+syn match texMathSymbol '\%(\\mathrm{\s*e\s*}\|\\rmee\>\|\\ue\>\|\\ee\>\)' contained conceal cchar=𝚎
 syn match texMathSymbol '\%(\\mathrm{\s*f\s*}\|\\rmff\>\)' contained conceal cchar=𝚏
 syn match texMathSymbol '\%(\\mathrm{\s*g\s*}\|\\rmgg\>\)' contained conceal cchar=𝚐
 syn match texMathSymbol '\%(\\mathrm{\s*h\s*}\|\\rmhh\>\)' contained conceal cchar=𝚑
